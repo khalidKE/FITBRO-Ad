@@ -1,0 +1,244 @@
+[
+  {
+    "name": "Spicy Chicken with Couscous",
+    "ingredients": [
+      "2 chicken breasts",
+      "1 cup couscous",
+      "1 tsp chili flakes",
+      "1 tsp cumin",
+      "1 bell pepper (sliced)",
+      "1 onion (sliced)",
+      "Olive oil",
+      "Salt and pepper"
+    ],
+    "instructions": "Season chicken breasts with chili flakes, cumin, salt, and pepper. Heat olive oil in a pan and cook chicken for 6-7 minutes on each side. In a separate pot, prepare couscous according to package instructions. Sauté bell peppers and onions. Serve chicken over couscous with sautéed vegetables.",
+    "calories": 450,
+    "image_url": "https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
+  {
+    "name": "Chicken Curry Gyros",
+    "ingredients": [
+      "2 chicken breasts",
+      "2 tbsp curry powder",
+      "4 pita breads",
+      "1 cucumber (sliced)",
+      "1/2 cup Greek yogurt",
+      "1 tbsp lemon juice",
+      "Salt and pepper",
+      "Olive oil"
+    ],
+    "instructions": "Season chicken with curry powder, salt, and pepper. Cook in a pan with olive oil until golden. Mix Greek yogurt, lemon juice, salt, and pepper for the sauce. Assemble gyros by placing chicken, cucumber, and sauce in pita bread.",
+    "calories": 550,
+    "image_url": "https://images.pexels.com/photos/23897672/pexels-photo-23897672/free-photo-of-curry-chicken-in-bowl.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
+  {
+    "name": "Naked Chicken Burrito Bowl",
+    "ingredients": [
+      "2 chicken breasts",
+      "1 cup brown rice",
+      "1/2 cup black beans",
+      "1/2 cup corn",
+      "1/4 cup salsa",
+      "1 avocado (sliced)",
+      "Cilantro",
+      "Lime juice"
+    ],
+    "instructions": "Cook chicken breasts in a pan and slice them. Prepare brown rice according to package instructions. Layer rice, beans, corn, and chicken in a bowl. Top with salsa, avocado, cilantro, and lime juice.",
+    "calories": 600,
+    "image_url": "https://images.pexels.com/photos/5836771/pexels-photo-5836771.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
+  {
+    "name": "Zingy Chicken Burger",
+    "ingredients": [
+      "2 chicken patties",
+      "2 burger buns",
+      "1 tomato (sliced)",
+      "Lettuce",
+      "2 tbsp mayonnaise",
+      "1 tbsp hot sauce",
+      "1 tsp lemon zest"
+    ],
+    "instructions": "Cook chicken patties in a pan or grill. Mix mayonnaise, hot sauce, and lemon zest to create a zingy sauce. Assemble burgers with chicken patty, tomato slices, lettuce, and sauce.",
+    "calories": 480,
+    "image_url": "https://images.pexels.com/photos/918581/pexels-photo-918581.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
+  {
+    "name": "Easy Pesto Chicken & Veg",
+    "ingredients": [
+      "2 chicken breasts",
+      "1/4 cup pesto",
+      "1 zucchini (sliced)",
+      "1 bell pepper (sliced)",
+      "Olive oil",
+      "Salt and pepper"
+    ],
+    "instructions": "Season chicken with salt and pepper, cook in a pan. In another pan, sauté zucchini and bell pepper. Toss chicken and vegetables with pesto and serve.",
+    "calories": 350,
+    "image_url": "https://images.pexels.com/photos/2697229/pexels-photo-2697229.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
+  {
+    "name": "Creamy Lemon & Thyme Chicken",
+    "ingredients": [
+      "2 chicken breasts",
+      "1/4 cup cream",
+      "1 lemon (zested and juiced)",
+      "1 tsp thyme",
+      "Olive oil",
+      "Salt and pepper"
+    ],
+    "instructions": "Cook chicken in a pan with olive oil. Add cream, lemon zest, lemon juice, and thyme to the pan, cooking for 5 more minutes until sauce thickens. Serve with rice or vegetables.",
+    "calories": 400,
+    "image_url": "https://images.pexels.com/photos/2679501/pexels-photo-2679501.jpeg?auto=compress&cs=tinysrgb&w=300"
+  },
+  {
+    "name": "Creamy Cajun Chicken Pasta",
+    "ingredients": [
+      "2 chicken breasts",
+      "200g pasta",
+      "2 tbsp Cajun seasoning",
+      "1/4 cup cream",
+      "1/4 cup Parmesan cheese",
+      "1 bell pepper (sliced)"
+    ],
+    "instructions": "Cook pasta according to package instructions. Season chicken with Cajun seasoning and cook in a pan. Add bell peppers, cream, and Parmesan, mixing until smooth. Combine with pasta and serve.",
+    "calories": 650,
+    "image_url": "https://images.pexels.com/photos/13294537/pexels-photo-13294537.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
+  {
+    "name": "Buffalo Chicken Pasta Salad",
+    "ingredients": [
+      "2 chicken breasts",
+      "200g pasta",
+      "1/4 cup buffalo sauce",
+      "1/4 cup ranch dressing",
+      "1/2 cup celery (sliced)",
+      "1/4 cup blue cheese crumbles"
+    ],
+    "instructions": "Cook pasta and chicken separately. Slice the chicken and toss with buffalo sauce. Combine pasta, chicken, celery, and ranch dressing. Top with blue cheese crumbles.",
+    "calories": 500,
+    "image_url": "https://images.pexels.com/photos/23996341/pexels-photo-23996341/free-photo-of-food-on-plate.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
+  {
+    "name": "30-Minute Chicken Tikka Masala",
+    "ingredients": [
+      "2 chicken breasts",
+      "2 tbsp tikka masala paste",
+      "1 cup tomato sauce",
+      "1/4 cup cream",
+      "1 onion (chopped)",
+      "1 cup basmati rice"
+    ],
+    "instructions": "Cook chicken with tikka masala paste until browned. Add tomato sauce and simmer for 10 minutes. Stir in cream and cook until smooth. Serve with basmati rice.",
+    "calories": 700,
+    "image_url": "https://images.pexels.com/photos/9609840/pexels-photo-9609840.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
+  {
+    "name": "One-Pot Creamy Garlic Chicken & Rice",
+    "ingredients": [
+      "2 chicken thighs",
+      "1 cup rice",
+      "2 garlic cloves (minced)",
+      "1/4 cup cream",
+      "1 cup chicken broth",
+      "Parsley (chopped)"
+    ],
+    "instructions": "Sauté chicken and garlic in a pot. Add rice, chicken broth, and cream. Simmer for 20 minutes until rice is cooked. Garnish with parsley and serve.",
+    "calories": 550,
+    "image_url": "https://images.pexels.com/photos/15957255/pexels-photo-15957255/free-photo-of-meatballs-spicy.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
+  {
+    "name": "Fajita Pasta Bake",
+    "ingredients": [
+      "2 chicken breasts",
+      "200g pasta",
+      "1/2 cup fajita seasoning",
+      "1 bell pepper (sliced)",
+      "1 onion (sliced)",
+      "1/4 cup cheese"
+    ],
+    "instructions": "Cook pasta and chicken separately. Sauté bell peppers and onions. Combine pasta, chicken, vegetables, fajita seasoning, and cheese in a baking dish. Bake for 15 minutes.",
+    "calories": 600,
+    "image_url": "https://images.pexels.com/photos/28895978/pexels-photo-28895978/free-photo-of-delicious-asian-noodles-with-soy-sauce-glaze.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
+  {
+    "name": "Chicken & Chorizo Paella",
+    "ingredients": [
+      "2 chicken thighs",
+      "1/2 cup chorizo (sliced)",
+      "1 cup rice",
+      "1 tsp paprika",
+      "1 bell pepper (sliced)",
+      "1 cup chicken broth"
+    ],
+    "instructions": "Cook chicken and chorizo in a pan. Add bell pepper, rice, paprika, and chicken broth. Simmer for 20 minutes until rice is tender.",
+    "calories": 700,
+    "image_url": "https://images.pexels.com/photos/13647484/pexels-photo-13647484.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
+ 
+  {
+    "name": "Marry Me Chicken",
+    "ingredients": [
+      "2 chicken breasts",
+      "1/4 cup sun-dried tomatoes",
+      "1/4 cup heavy cream",
+      "1/4 cup Parmesan cheese",
+      "1 garlic clove (minced)"
+    ],
+    "instructions": "Cook chicken in a pan. Add sun-dried tomatoes, cream, Parmesan, and garlic. Simmer until sauce thickens. Serve with pasta or vegetables.",
+    "calories": 600,
+    "image_url": "https://images.pexels.com/photos/4730662/pexels-photo-4730662.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
+  {
+    "name": "One-Pot Chicken Ramen",
+    "ingredients": [
+      "2 chicken breasts",
+      "2 packs ramen noodles",
+      "4 cups chicken broth",
+      "1 carrot (sliced)",
+      "2 garlic cloves (minced)",
+      "1 tbsp soy sauce"
+    ],
+    "instructions": "Sauté chicken and garlic in a pot. Add chicken broth, carrot, and soy sauce. Simmer for 10 minutes, then add ramen noodles and cook until tender.",
+    "calories": 450,
+    "image_url": "https://images.pexels.com/photos/16068666/pexels-photo-16068666/free-photo-of-a-bowl-of-ramen-with-an-egg-and-meat.jpeg?auto=compress&cs=tinysrgb&w=300"
+  },
+  {
+    "name": "BBQ Chicken & Rice",
+    "ingredients": [
+      "2 chicken breasts",
+      "1/2 cup BBQ sauce",
+      "1 cup rice",
+      "1/4 cup corn",
+      "Cilantro"
+    ],
+    "instructions": "Cook chicken in BBQ sauce. Prepare rice and corn. Serve chicken over rice, garnished with cilantro.",
+    "calories": 500,
+    "image_url": "https://images.pexels.com/photos/20258877/pexels-photo-20258877/free-photo-of-roasted-shashliks-with-vegetables.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
+  {
+    "name": "Creamy Tomato Chicken Sandwich",
+    "ingredients": [
+      "2 chicken breasts",
+      "1/4 cup tomato sauce",
+      "1/4 cup cream",
+      "2 sandwich rolls",
+      "1 lettuce leaf",
+      "1 tomato (sliced)"
+    ],
+    "instructions": "Cook chicken and slice it. Mix tomato sauce and cream. Assemble sandwiches with chicken, sauce, lettuce, and tomato slices.",
+    "calories": 400,
+    "image_url": "https://images.pexels.com/photos/28897047/pexels-photo-28897047/free-photo-of-delicious-shawarma-wraps-with-fresh-ingredients.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  },
+  {
+    "name": "Crispy Honey Sriracha Chicken Tenders",
+    "ingredients": [
+      "500g chicken tenders",
+      "1/4 cup honey",
+      "2 tbsp Sriracha",
+      "1/4 cup breadcrumbs"
+    ],
+    "instructions": "Coat chicken tenders with breadcrumbs and bake until crispy. Mix honey and Sriracha, then drizzle over the chicken.",
+    "calories": 350,
+    "image_url": "https://images.pexels.com/photos/16261532/pexels-photo-16261532/free-photo-of-woman-hands-holding-meat-with-sauce.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+  }
+]

@@ -1,0 +1,1177 @@
+[
+    {
+        "id": 1,
+        "name": "Band-Assisted Bench Press",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Lie on a bench and press the barbell while using bands for assistance.",
+        "equipment": "Barbell, Bands, Bench",
+        "difficulty": "Intermediate",
+        "image": "https://stroops.com/wp-content/uploads/2019/01/Stroops-Trainer-Caysem-Banded-Bench-Press.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Bar Dip",
+        "muscles": [
+            "Chest",
+            "Triceps",
+            "Shoulders"
+        ],
+        "instruction": "Lower your body between two bars and push back up.",
+        "equipment": "Dip Bars",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/99/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Bench Press",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Lie on a bench and press the barbell upwards.",
+        "equipment": "Barbell, Bench",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/29/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Bench Press Against Band",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Perform a bench press with resistance bands attached to the bar.",
+        "equipment": "Barbell, Bands, Bench",
+        "difficulty": "Intermediate",
+        "image": "https://stroops.com/wp-content/uploads/2019/01/Stroops-Trainer-Caysem-Banded-Bench-Press.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Board Press",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Press the barbell while resting it on a board placed on your chest.",
+        "equipment": "Barbell, Board",
+        "difficulty": "Intermediate",
+        "image": "https://assets-jpcust.jwpsrv.com/thumbnails/p36p97bk-720.jpg"
+    },
+    {
+        "id": 6,
+        "name": "Cable Chest Press",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Press the cables forward while standing or seated.",
+        "equipment": "Cable Machine",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/60/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 7,
+        "name": "Close-Grip Bench Press",
+        "muscles": [
+            "Triceps",
+            "Chest"
+        ],
+        "instruction": "Lie on a bench and press the barbell with a close grip.",
+        "equipment": "Barbell, Bench",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/343/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 8,
+        "name": "Close-Grip Feet-Up Bench Press",
+        "muscles": [
+            "Triceps",
+            "Chest"
+        ],
+        "instruction": "Lie on a bench with feet elevated and press the barbell.",
+        "equipment": "Barbell, Bench",
+        "difficulty": "Intermediate",
+        "image": "https://i.ytimg.com/vi/Ltn_7qex5oI/maxresdefault.jpg"
+    },
+    {
+        "id": 9,
+        "name": "Decline Bench Press",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Lie on a decline bench and press the barbell upwards.",
+        "equipment": "Barbell, Decline Bench",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/744/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 10,
+        "name": "Decline Push-Up",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Perform a push-up with your feet elevated on a bench.",
+        "equipment": "None",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/97/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 11,
+        "name": "Dumbbell Chest Fly",
+        "muscles": [
+            "Chest"
+        ],
+        "instruction": "Lie on a bench and open and close the dumbbells in an arc.",
+        "equipment": "Dumbbells, Bench",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/108/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 12,
+        "name": "Dumbbell Chest Press",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Lie on a bench and press the dumbbells upwards.",
+        "equipment": "Dumbbells, Bench",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/100/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 13,
+        "name": "Dumbbell Decline Chest Press",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Lie on a decline bench and press the dumbbells upwards.",
+        "equipment": "Dumbbells, Decline Bench",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/105/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 14,
+        "name": "Dumbbell Floor Press",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Lie on the floor and press the dumbbells upwards.",
+        "equipment": "Dumbbells",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/317/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 15,
+        "name": "Dumbbell Pullover",
+        "muscles": [
+            "Chest",
+            "Lats"
+        ],
+        "instruction": "Lie on a bench and lower the dumbbell behind your head and back up.",
+        "equipment": "Dumbbell, Bench",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/3077/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 16,
+        "name": "Feet-Up Bench Press",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Lie on a bench with feet elevated and press the barbell.",
+        "equipment": "Barbell, Bench",
+        "difficulty": "Beginner",
+        "image": "https://i.ytimg.com/vi/F0nWiz4dtOc/maxresdefault.jpg"
+    },
+    {
+        "id": 17,
+        "name": "Floor Press",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Lie on the floor and press the barbell or dumbbells upwards.",
+        "equipment": "Barbell/Dumbbells",
+        "difficulty": "Beginner",
+        "image": "https://i.ytimg.com/vi/lNdi7VEf2Ew/maxresdefault.jpg"
+    },
+    {
+        "id": 18,
+        "name": "Incline Bench Press",
+        "muscles": [
+            "Upper Chest",
+            "Triceps"
+        ],
+        "instruction": "Lie on an incline bench and press the barbell upwards.",
+        "equipment": "Barbell, Incline Bench",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/36/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 19,
+        "name": "Incline Dumbbell Press",
+        "muscles": [
+            "Upper Chest",
+            "Triceps"
+        ],
+        "instruction": "Lie on an incline bench and press the dumbbells upwards.",
+        "equipment": "Dumbbells, Incline Bench",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/111/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 20,
+        "name": "Incline Push-Up",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Perform a push-up with your hands elevated on a bench.",
+        "equipment": "None",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/451/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 21,
+        "name": "Kettlebell Floor Press",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Lie on the floor and press the kettlebell upwards.",
+        "equipment": "Kettlebell",
+        "difficulty": "Intermediate",
+        "image": "https://i.ytimg.com/vi/BDCAkIEOPvE/hqdefault.jpg"
+    },
+    {
+        "id": 22,
+        "name": "Kneeling Incline Push-Up",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Perform a push-up from a kneeling position with hands on an incline.",
+        "equipment": "None",
+        "difficulty": "Beginner",
+        "image": "https://mindbodygreen-res.cloudinary.com/image/upload/w_480,q_auto,f_auto,fl_lossy/org/s1z9mxozqkksoi123.jpg"
+    },
+    {
+        "id": 23,
+        "name": "Kneeling Push-Up",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Perform a push-up from a kneeling position.",
+        "equipment": "None",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/459/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 24,
+        "name": "Machine Chest Fly",
+        "muscles": [
+            "Chest"
+        ],
+        "instruction": "Sit on the machine and bring the handles together.",
+        "equipment": "Machine",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/239/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 25,
+        "name": "Machine Chest Press",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Push the handles away from your chest on the machine.",
+        "equipment": "Machine",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/159/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 26,
+        "name": "Pec Deck",
+        "muscles": [
+            "Chest"
+        ],
+        "instruction": "Sit on the machine and bring the arms together in front.",
+        "equipment": "Machine",
+        "difficulty": "Beginner",
+        "image": "https://atlantisstrength.com/app/uploads/2023/02/pec-deck-1-1100x660.png"
+    },
+    {
+        "id": 27,
+        "name": "Pin Bench Press",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Press the barbell while it is resting on pins.",
+        "equipment": "Barbell, Pins",
+        "difficulty": "Intermediate",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAcj5bRbFYDjsZYtUGy8R-JY6anIOdPNDTJA&s"
+    },
+    {
+        "id": 28,
+        "name": "Push-Up",
+        "muscles": [
+            "Chest",
+            "Triceps",
+            "Shoulders"
+        ],
+        "instruction": "Lower your body to the ground and push back up.",
+        "equipment": "None",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/523/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 29,
+        "name": "Push-Up Against Wall",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Stand and perform a push-up against a wall.",
+        "equipment": "None",
+        "difficulty": "Beginner",
+        "image": "https://images.ctfassets.net/hjcv6wdwxsdz/4hVGeLAS8Tgl1gl5GQ2GWv/9ebf95bdfd13be5050296f3874d11165/wall-push-ups-brandon-hold.png?w=1200"
+    },
+    {
+        "id": 30,
+        "name": "Push-Ups With Feet in Rings",
+        "muscles": [
+            "Chest",
+            "Triceps",
+            "Shoulders"
+        ],
+        "instruction": "Perform a push-up with your feet suspended in rings.",
+        "equipment": "Rings",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/416/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 31,
+        "name": "Resistance Band Chest Fly",
+        "muscles": [
+            "Chest"
+        ],
+        "instruction": "Stand and extend the bands out to the sides.",
+        "equipment": "Resistance Bands",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/768/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 32,
+        "name": "Smith Machine Bench Press",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Use the Smith machine to press the barbell.",
+        "equipment": "Smith Machine",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/340/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 33,
+        "name": "Smith Machine Incline Bench Press",
+        "muscles": [
+            "Upper Chest",
+            "Triceps"
+        ],
+        "instruction": "Use the Smith machine for an incline press.",
+        "equipment": "Smith Machine",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/745/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 34,
+        "name": "Standing Cable Chest Fly",
+        "muscles": [
+            "Chest"
+        ],
+        "instruction": "Stand and pull the cables together in front of you.",
+        "equipment": "Cable Machine",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/61/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 35,
+        "name": "Standing Resistance Band Chest Fly",
+        "muscles": [
+            "Chest"
+        ],
+        "instruction": "Stand and extend the bands out to the sides.",
+        "equipment": "Resistance Bands",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/795/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 36,
+        "name": "Band External Shoulder Rotation",
+        "muscles": [
+            "Shoulders"
+        ],
+        "instruction": "Rotate your arm outward against the band resistance.",
+        "equipment": "Resistance Bands",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/71/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 37,
+        "name": "Band Internal Shoulder Rotation",
+        "muscles": [
+            "Shoulders"
+        ],
+        "instruction": "Rotate your arm inward against the band resistance.",
+        "equipment": "Resistance Bands",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/74/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 38,
+        "name": "Band Pull-Apart",
+        "muscles": [
+            "Shoulders",
+            "Back"
+        ],
+        "instruction": "Hold the band with both hands and pull it apart.",
+        "equipment": "Resistance Bands",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/618/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 39,
+        "name": "Barbell Front Raise",
+        "muscles": [
+            "Shoulders"
+        ],
+        "instruction": "Lift the barbell in front of you to shoulder height.",
+        "equipment": "Barbell",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/2065/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 40,
+        "name": "Barbell Rear Delt Row",
+        "muscles": [
+            "Shoulders",
+            "Back"
+        ],
+        "instruction": "Bend forward and row the barbell to your chest.",
+        "equipment": "Barbell",
+        "difficulty": "Intermediate",
+        "image": "https://qph.cf2.quoracdn.net/main-qimg-1aa6c37b855098e4cba954670dbb4851-lq"
+    },
+    {
+        "id": 41,
+        "name": "Barbell Upright Row",
+        "muscles": [
+            "Shoulders",
+            "Traps"
+        ],
+        "instruction": "Lift the barbell up to your chin.",
+        "equipment": "Barbell",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/428/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 42,
+        "name": "Behind the Neck Press",
+        "muscles": [
+            "Shoulders"
+        ],
+        "instruction": "Press the barbell from behind your neck.",
+        "equipment": "Barbell",
+        "difficulty": "Advanced",
+        "image": "https://app-media.fitbod.me/v2/223/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 43,
+        "name": "Cable Lateral Raise",
+        "muscles": [
+            "Shoulders"
+        ],
+        "instruction": "Raise the cable out to the side.",
+        "equipment": "Cable Machine",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/2004/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 44,
+        "name": "Cable Rear Delt Row",
+        "muscles": [
+            "Shoulders",
+            "Back"
+        ],
+        "instruction": "Pull the cable towards your face.",
+        "equipment": "Cable Machine",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/138/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 45,
+        "name": "Dumbbell Front Raise",
+        "muscles": [
+            "Shoulders"
+        ],
+        "instruction": "Lift the dumbbells in front of you to shoulder height.",
+        "equipment": "Dumbbells",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/109/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 46,
+        "name": "Dumbbell Horizontal Internal Shoulder Rotation",
+        "muscles": [
+            "Shoulders"
+        ],
+        "instruction": "Rotate the dumbbell inward while keeping the elbow bent.",
+        "equipment": "Dumbbell",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/3063/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 47,
+        "name": "Dumbbell Lateral Raise",
+        "muscles": [
+            "Shoulders"
+        ],
+        "instruction": "Raise the dumbbells out to the side.",
+        "equipment": "Dumbbells",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/114/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 48,
+        "name": "Dumbbell Overhead Press",
+        "muscles": [
+            "Shoulders",
+            "Triceps"
+        ],
+        "instruction": "Press the dumbbells overhead.",
+        "equipment": "Dumbbells",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/120/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 49,
+        "name": "Dumbbell Rear Delt Fly",
+        "muscles": [
+            "Shoulders",
+            "Back"
+        ],
+        "instruction": "Bend forward and raise the dumbbells out to the side.",
+        "equipment": "Dumbbells",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/117/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 50,
+        "name": "Dumbbell Upright Row",
+        "muscles": [
+            "Shoulders",
+            "Traps"
+        ],
+        "instruction": "Lift the dumbbells up to your chin.",
+        "equipment": "Dumbbells",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/131/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 51,
+        "name": "Kettlebell Front Raise",
+        "muscles": [
+            "Shoulders"
+        ],
+        "instruction": "Lift the kettlebell in front of you to shoulder height.",
+        "equipment": "Kettlebell",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/15/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 52,
+        "name": "Kettlebell Lateral Raise",
+        "muscles": [
+            "Shoulders"
+        ],
+        "instruction": "Lift the kettlebell out to the side.",
+        "equipment": "Kettlebell",
+        "difficulty": "Intermediate",
+        "image": "https://i.ytimg.com/vi/tbkAGygOTCc/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBVT5lIfuaH23Tg41ZFlA_MWOFF_A"
+    },
+    {
+        "id": 53,
+        "name": "Kettlebell Overhead Press",
+        "muscles": [
+            "Shoulders",
+            "Triceps"
+        ],
+        "instruction": "Press the kettlebell overhead.",
+        "equipment": "Kettlebell",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/2033/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 54,
+        "name": "Kettlebell Rear Delt Fly",
+        "muscles": [
+            "Shoulders",
+            "Back"
+        ],
+        "instruction": "Bend forward and raise the kettlebell out to the side.",
+        "equipment": "Kettlebell",
+        "difficulty": "Intermediate",
+        "image": "https://d3p2750kqzf48b.cloudfront.net/wp-content/uploads/2016/05/07155056/Kettle-Bell-Rear-Delt-Fly.jpg"
+    },
+    {
+        "id": 55,
+        "name": "Kettlebell Upright Row",
+        "muscles": [
+            "Shoulders",
+            "Traps"
+        ],
+        "instruction": "Lift the kettlebell up to your chin.",
+        "equipment": "Kettlebell",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/200/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 56,
+        "name": "Machine Lateral Raise",
+        "muscles": [
+            "Shoulders"
+        ],
+        "instruction": "Sit on the machine and lift the arms out to the side.",
+        "equipment": "Machine",
+        "difficulty": "Beginner",
+        "image": "https://i.ytimg.com/vi/xMEs3zEzS8s/maxresdefault.jpg"
+    },
+    {
+        "id": 57,
+        "name": "Machine Shoulder Press",
+        "muscles": [
+            "Shoulders",
+            "Triceps"
+        ],
+        "instruction": "Push the handles of the machine overhead.",
+        "equipment": "Machine",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/164/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 58,
+        "name": "Seated Dumbbell Lateral Raise",
+        "muscles": [
+            "Shoulders"
+        ],
+        "instruction": "Sit and lift the dumbbells out to the side.",
+        "equipment": "Dumbbells",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/3052/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 59,
+        "name": "Seated Shoulder Press",
+        "muscles": [
+            "Shoulders",
+            "Triceps"
+        ],
+        "instruction": "Sit and press the dumbbells overhead.",
+        "equipment": "Dumbbells",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/120/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 60,
+        "name": "Standing Dumbbell Lateral Raise",
+        "muscles": [
+            "Shoulders"
+        ],
+        "instruction": "Stand and lift the dumbbells out to the side.",
+        "equipment": "Dumbbells",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/114/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 61,
+        "name": "Standing Shoulder Press",
+        "muscles": [
+            "Shoulders",
+            "Triceps"
+        ],
+        "instruction": "Stand and press the dumbbells overhead.",
+        "equipment": "Dumbbells",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/2053/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 62,
+        "name": "T-Bar Row",
+        "muscles": [
+            "Back",
+            "Biceps"
+        ],
+        "instruction": "Pull the T-bar towards your chest.",
+        "equipment": "T-Bar Machine",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/384/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 63,
+        "name": "TRX Row",
+        "muscles": [
+            "Back",
+            "Biceps"
+        ],
+        "instruction": "Pull your body towards the anchor point using TRX straps.",
+        "equipment": "TRX Straps",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/417/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 64,
+        "name": "Weighted Push-Up",
+        "muscles": [
+            "Chest",
+            "Triceps"
+        ],
+        "instruction": "Perform a push-up with added weight on your back.",
+        "equipment": "Weight Plate",
+        "difficulty": "Intermediate",
+        "image": "https://www.bodybuilding.com/images/2020/xdb/originals/xdb-56s-plate-weighted-push-up-m1-16x9.jpg"
+    },
+    {
+        "id": 65,
+        "name": "Weighted Ring Dip",
+        "muscles": [
+            "Chest",
+            "Triceps",
+            "Shoulders"
+        ],
+        "instruction": "Perform a dip on rings with added weight.",
+        "equipment": "Rings, Weight",
+        "difficulty": "Advanced",
+        "image": "https://i.ytimg.com/vi/rbVHmyjjpwI/maxresdefault.jpg"
+    },
+    {
+        "id": 66,
+        "name": "Bent-Over Dumbbell Row",
+        "muscles": [
+            "Back",
+            "Biceps"
+        ],
+        "instruction": "Bend over and pull the dumbbells towards your waist.",
+        "equipment": "Dumbbells",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/3071/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 67,
+        "name": "Cable Lat Pulldown",
+        "muscles": [
+            "Back",
+            "Biceps"
+        ],
+        "instruction": "Pull the cable bar down to your chest while seated.",
+        "equipment": "Cable Machine",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/436/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 68,
+        "name": "Chin-Up",
+        "muscles": [
+            "Back",
+            "Biceps"
+        ],
+        "instruction": "Pull yourself up until your chin is above the bar.",
+        "equipment": "Pull-Up Bar",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/82/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 69,
+        "name": "Dumbbell Row",
+        "muscles": [
+            "Back",
+            "Biceps"
+        ],
+        "instruction": "Pull the dumbbell towards your hip while keeping your back straight.",
+        "equipment": "Dumbbells",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/101/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 70,
+        "name": "Dumbbell Shrug",
+        "muscles": [
+            "Traps"
+        ],
+        "instruction": "Lift the dumbbells straight up towards your ears.",
+        "equipment": "Dumbbells",
+        "difficulty": "Beginner",
+        "image": "https://i.ytimg.com/vi/_t3lrPI6Ns4/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLD6JXo-ihS8oDwuECujfhRcWKH2VA"
+    },
+    {
+        "id": 71,
+        "name": "Kettlebell Swing",
+        "muscles": [
+            "Legs",
+            "Glutes",
+            "Back"
+        ],
+        "instruction": "Swing the kettlebell between your legs and then thrust it forward.",
+        "equipment": "Kettlebell",
+        "difficulty": "Intermediate",
+        "image": "https://fitclubny.com/wp-content/uploads/2022/06/kettlebell_swing_small.jpg"
+    },
+    {
+        "id": 72,
+        "name": "Lat Pulldown",
+        "muscles": [
+            "Back",
+            "Biceps"
+        ],
+        "instruction": "Pull the bar down to your chest while seated.",
+        "equipment": "Cable Machine",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/577/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 73,
+        "name": "Lateral Raise",
+        "muscles": [
+            "Shoulders"
+        ],
+        "instruction": "Raise your arms out to the sides to shoulder height.",
+        "equipment": "Dumbbells",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/65/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 74,
+        "name": "Machine Seated Row",
+        "muscles": [
+            "Back",
+            "Biceps"
+        ],
+        "instruction": "Pull the handles towards your body while seated.",
+        "equipment": "Machine",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/163/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 75,
+        "name": "Pull-Up",
+        "muscles": [
+            "Back",
+            "Biceps"
+        ],
+        "instruction": "Pull yourself up until your chin is above the bar.",
+        "equipment": "Pull-Up Bar",
+        "difficulty": "Advanced",
+        "image": "https://app-media.fitbod.me/v2/18/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 76,
+        "name": "Seated Cable Row",
+        "muscles": [
+            "Back",
+            "Biceps"
+        ],
+        "instruction": "Pull the cable handle towards your abdomen while seated.",
+        "equipment": "Cable Machine",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/69/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 77,
+        "name": "Single-Arm Dumbbell Row",
+        "muscles": [
+            "Back",
+            "Biceps"
+        ],
+        "instruction": "Pull the dumbbell towards your hip with one arm.",
+        "equipment": "Dumbbells",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/119/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 78,
+        "name": "Standing Dumbbell Press",
+        "muscles": [
+            "Shoulders",
+            "Triceps"
+        ],
+        "instruction": "Press the dumbbells overhead while standing.",
+        "equipment": "Dumbbells",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/2053/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 79,
+        "name": "T-Bar Row",
+        "muscles": [
+            "Back",
+            "Biceps"
+        ],
+        "instruction": "Pull the T-bar towards your chest.",
+        "equipment": "T-Bar Machine",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/545/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 80,
+        "name": "Dumbbell Deadlift",
+        "muscles": [
+            "Legs",
+            "Back"
+        ],
+        "instruction": "Lift the dumbbells from the floor while keeping your back straight.",
+        "equipment": "Dumbbells",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/129/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 81,
+        "name": "Kettlebell Deadlift",
+        "muscles": [
+            "Legs",
+            "Back"
+        ],
+        "instruction": "Lift the kettlebell from the floor while keeping your back straight.",
+        "equipment": "Kettlebell",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/3133/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 82,
+        "name": "Back Extension",
+        "muscles": [
+            "Lower Back"
+        ],
+        "instruction": "Lower your upper body and then raise it back up.",
+        "equipment": "Hyperextension Bench",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/2101/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 83,
+        "name": "Seated Shoulder Press Machine",
+        "muscles": [
+            "Shoulders",
+            "Triceps"
+        ],
+        "instruction": "Press the handles of the machine overhead.",
+        "equipment": "Shoulder Press Machine",
+        "difficulty": "Beginner",
+        "image": "https://i.ytimg.com/vi/Va6EmhKvxVk/hqdefault.jpg"
+    },
+    {
+        "id": 84,
+        "name": "Face Pull",
+        "muscles": [
+            "Shoulders",
+            "Back"
+        ],
+        "instruction": "Pull the cable towards your face at shoulder height.",
+        "equipment": "Cable Machine",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/138/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 85,
+        "name": "Landmine Row",
+        "muscles": [
+            "Back",
+            "Biceps"
+        ],
+        "instruction": "Pull the barbell towards your chest using a landmine setup.",
+        "equipment": "Barbell, Landmine",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/2086/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 86,
+        "name": "Plate Front Raise",
+        "muscles": [
+            "Shoulders"
+        ],
+        "instruction": "Lift a weight plate in front of you to shoulder height.",
+        "equipment": "Weight Plate",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/149/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 87,
+        "name": "Plate Shoulder Press",
+        "muscles": [
+            "Shoulders",
+            "Triceps"
+        ],
+        "instruction": "Press a weight plate overhead.",
+        "equipment": "Weight Plate",
+        "difficulty": "Intermediate",
+        "image": "https://i.ytimg.com/vi/aOD13T6pHs8/hq2.jpg?sqp=-oaymwEYCOgCEOgCSFryq4qpAwoIARUAAIhC0AEB&rs=AOn4CLA6WspBYlM98xPpzMM9zt-HcV1NZg"
+    },
+    {
+        "id": 88,
+        "name": "Standing Cable Rear Delt Fly",
+        "muscles": [
+            "Shoulders",
+            "Back"
+        ],
+        "instruction": "Pull the cables out to the side while standing.",
+        "equipment": "Cable Machine",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/67/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 89,
+        "name": "Wall Ball",
+        "muscles": [
+            "Legs",
+            "Core"
+        ],
+        "instruction": "Throw the medicine ball against the wall and catch it.",
+        "equipment": "Medicine Ball",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/433/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 90,
+        "name": "Weighted Squat",
+        "muscles": [
+            "Legs",
+            "Glutes"
+        ],
+        "instruction": "Perform a squat while holding a weight.",
+        "equipment": "Dumbbells, Barbell",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/26/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 91,
+        "name": "Box Jump",
+        "muscles": [
+            "Legs",
+            "Glutes"
+        ],
+        "instruction": "Jump onto a sturdy box or platform.",
+        "equipment": "Box",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/3033/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 92,
+        "name": "Burpee",
+        "muscles": [
+            "Full Body"
+        ],
+        "instruction": "Jump up, drop into a push-up position, perform a push-up, then jump back up.",
+        "equipment": "None",
+        "difficulty": "Intermediate",
+        "image": "https://i0.wp.com/www.muscleandfitness.com/wp-content/uploads/2017/04/burpee-1109.jpg?w=1300&h=731&crop=1&quality=86&strip=all"
+    },
+    {
+        "id": 93,
+        "name": "Jump Rope",
+        "muscles": [
+            "Legs",
+            "Cardio"
+        ],
+        "instruction": "Jump continuously over a rope.",
+        "equipment": "Jump Rope",
+        "difficulty": "Beginner",
+        "image": "https://www.jumpropedudes.com/wp-content/uploads/2022/02/IMG_6058-1024x1024.jpg"
+    },
+    {
+        "id": 94,
+        "name": "Medicine Ball Slam",
+        "muscles": [
+            "Full Body"
+        ],
+        "instruction": "Lift the medicine ball overhead and slam it down.",
+        "equipment": "Medicine Ball",
+        "difficulty": "Intermediate",
+        "image": "https://www.dmoose.com/cdn/shop/articles/1_8edc8c93-6b37-433a-a1e8-243c4de27ea2.jpg?v=1648912735"
+    },
+    {
+        "id": 95,
+        "name": "Russian Twist",
+        "muscles": [
+            "Core"
+        ],
+        "instruction": "Sit on the floor and twist your torso side to side with a weight.",
+        "equipment": "Dumbbell, Medicine Ball",
+        "difficulty": "Intermediate",
+        "image": "https://storage.googleapis.com/sworkit-assets/images/exercises/standard/middle-frame/mason-twist.jpg"
+    },
+    {
+        "id": 96,
+        "name": "Plank",
+        "muscles": [
+            "Core"
+        ],
+        "instruction": "Hold your body in a straight line from head to heels.",
+        "equipment": "None",
+        "difficulty": "Beginner",
+        "image": "https://hips.hearstapps.com/hmg-prod/images/hdm119918mh15842-1545237096.png?crop=0.668xw:1.00xh;0.117xw,0&resize=1200:*"
+    },
+    {
+        "id": 97,
+        "name": "Bicycle Crunch",
+        "muscles": [
+            "Core"
+        ],
+        "instruction": "Lie on your back and bring your elbow to the opposite knee.",
+        "equipment": "None",
+        "difficulty": "Beginner",
+        "image": "https://www.shutterstock.com/image-photo/young-man-workout-fitness-club-600nw-578116237.jpg"
+    },
+    {
+        "id": 98,
+        "name": "Leg Raise",
+        "muscles": [
+            "Core"
+        ],
+        "instruction": "Lie on your back and lift your legs straight up.",
+        "equipment": "None",
+        "difficulty": "Beginner",
+        "image": "https://app-media.fitbod.me/v2/233/images/landscape/0_960x540.jpg"
+    },
+    {
+        "id": 99,
+        "name": "Side Plank",
+        "muscles": [
+            "Core"
+        ],
+        "instruction": "Lie on your side and lift your body up with your forearm.",
+        "equipment": "None",
+        "difficulty": "Beginner",
+        "image": "https://www.endomondo.com/wp-content/uploads/2024/08/side-plank-benefits.jpg"
+    },
+    {
+        "id": 100,
+        "name": "Mountain Climbers",
+        "muscles": [
+            "Core",
+            "Legs"
+        ],
+        "instruction": "In a plank position, drive your knees to your chest alternately.",
+        "equipment": "None",
+        "difficulty": "Intermediate",
+        "image": "https://app-media.fitbod.me/v2/255/images/landscape/0_960x540.jpg"
+    }
+]
