@@ -43,7 +43,7 @@ Personalize your fitness journey with workouts, meal plans, yoga, tips, history 
 
 ## 👨‍💻 Developer
 
-- **Name:** KHalid Elabd
+- **Name:** Khalid Elabd
 - **Contact:** [khalidelabd.fcai.usc@gmail.com](mailto:khalidelabd.fcai.usc@gmail.com)
 
 ---
