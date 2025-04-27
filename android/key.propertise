@@ -1,0 +1,4 @@
+storePassword=123khabu45
+keyPassword=123khabu45
+keyAlias=upload
+storeFile=../app/upload-keystore.jks

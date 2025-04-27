@@ -1604,99 +1604,92 @@ class _MenuViewState extends State<MenuView>
                         ),
                       ),
                       Expanded(
-                              child: AnimatedSwitcher(
-                                duration: const Duration(milliseconds: 300),
-                                child: GridView.builder(
-                                  key: const ValueKey('menu_grid'),
-                                  padding: const EdgeInsets.fromLTRB(
-                                    15,
-                                    5,
-                                    15,
-                                    20,
-                                  ),
-                                  physics: const BouncingScrollPhysics(),
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        crossAxisSpacing: 15,
-                                        mainAxisSpacing: 15,
-                                        childAspectRatio: 0.9,
-                                      ),
-                                  itemCount: menuArr.length,
-                                  itemBuilder: ((context, index) {
-                                    var mObj = menuArr[index] as Map? ?? {};
-                                    return _buildMenuItem(mObj, index);
-                                  }),
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          child: GridView.builder(
+                            key: const ValueKey('menu_grid'),
+                            padding: const EdgeInsets.fromLTRB(15, 5, 15, 20),
+                            physics: const BouncingScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 15,
+                                  mainAxisSpacing: 15,
+                                  childAspectRatio: 0.9,
+                                ),
+                            itemCount: menuArr.length,
+                            itemBuilder: ((context, index) {
+                              var mObj = menuArr[index] as Map? ?? {};
+                              return _buildMenuItem(mObj, index);
+                            }),
+                          ),
+                        ),
+                      ),
+                      // Ad section with better visual integration
+                      if (_isBannerAdLoaded)
+                        Column(
+                          children: [
+                            // Divider with gradient for better visual separation
+                            Container(
+                              height: 1,
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                              ),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Colors.transparent,
+                                    fitColors["secondary"]!.withOpacity(0.5),
+                                    Colors.transparent,
+                                  ],
                                 ),
                               ),
                             ),
-                            // Ad section with better visual integration
-                            if (_isBannerAdLoaded)
-                              Column(
-                                children: [
-                                  // Divider with gradient for better visual separation
-                                  Container(
-                                    height: 1,
-                                    margin: const EdgeInsets.symmetric(
-                                      horizontal: 20,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          Colors.transparent,
-                                          fitColors["secondary"]!.withOpacity(
-                                            0.5,
-                                          ),
-                                          Colors.transparent,
-                                        ],
-                                      ),
-                                    ),
+                            const SizedBox(height: 8),
+                            // Ad label for transparency
+                            Text(
+                              "Advertisement",
+                              style: TextStyle(
+                                fontSize: 10,
+                                color:
+                                    isDarkMode
+                                        ? Colors.white.withOpacity(0.5)
+                                        : Colors.black.withOpacity(0.5),
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            // Banner ad with improved container
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.05),
+                                    blurRadius: 4,
+                                    offset: const Offset(0, 2),
                                   ),
-                                  const SizedBox(height: 8),
-                                  // Ad label for transparency
-                                  Text(
-                                    "Advertisement",
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color:
-                                          isDarkMode
-                                              ? Colors.white.withOpacity(0.5)
-                                              : Colors.black.withOpacity(0.5),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  // Banner ad with improved container
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.05),
-                                          blurRadius: 4,
-                                          offset: const Offset(0, 2),
-                                        ),
-                                      ],
-                                    ),
-                                    margin: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        width: _bannerAd!.size.width.toDouble(),
-                                        height:
-                                            _bannerAd!.size.height.toDouble(),
-                                        child: AdWidget(ad: _bannerAd!),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
                                 ],
                               ),
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: _bannerAd!.size.width.toDouble(),
+                                  height: _bannerAd!.size.height.toDouble(),
+                                  child: AdWidget(ad: _bannerAd!),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 60),
                           ],
                         ),
-                      ),)
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         );

@@ -223,6 +223,7 @@ class _WorkoutDetailViewState extends State<WorkoutDetailView> {
                   height: _bannerAd!.size.height.toDouble(),
                   child: AdWidget(ad: _bannerAd!),
                 ),
+              SizedBox(height: 60),
             ],
           ),
         );
