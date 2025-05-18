@@ -1,6 +1,6 @@
+import 'package:FitBro/models/blocs/cubit/StoreCubit/srore_cubit.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:FitBro/intro.dart';
-import 'package:FitBro/models/blocs/cubit/AuthCubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -22,7 +22,7 @@ class SplashScreen extends StatelessWidget {
             LocalData.getData(key: SharedKey.uid) == null
                 ? const IntroductionScreen()
                 : BlocProvider(
-                  create: (context) => AuthCubit()..getUserInfoFire(),
+                  create: (context) => SaveCubit(),
                   child: const MenuView(),
                 ),
         splashTransition: SplashTransition.sizeTransition,

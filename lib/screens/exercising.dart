@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart'; // Add this import
 import 'package:FitBro/common/color_extension.dart';
-import 'package:FitBro/models/blocs/cubit/AuthCubit/auth_cubit.dart';
 import 'package:FitBro/models/blocs/cubit/StoreCubit/srore_cubit.dart';
 import 'package:FitBro/models/blocs/cubit/workoutcubit.dart';
 import 'package:FitBro/models/data/data.dart';
@@ -212,7 +211,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
       MaterialPageRoute(
         builder:
             (context) => BlocProvider(
-              create: (context) => AuthCubit()..getUserInfoFire(),
+              create: (context) => SaveCubit(),
               child: const MenuView(),
             ),
       ),

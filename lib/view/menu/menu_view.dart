@@ -1,16 +1,15 @@
 import 'dart:ui';
-import 'package:FitBro/models/blocs/cubit/AuthCubit/auth_cubit.dart';
+import 'package:FitBro/config/admob_config.dart';
 import 'package:FitBro/models/blocs/cubit/StoreCubit/srore_cubit.dart';
+import 'package:FitBro/view/menu/yoga_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:FitBro/screens/Auth_Screen/Login_Screen.dart';
-import 'package:FitBro/screens/presets.dart';
-import 'package:FitBro/view/menu/yoga_view.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart'; // Add this import
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../../common/color_extension.dart';
 import '../../common_widget/plan_row.dart';
 import '../../screens/ExerciseHistoryScreen/ExerciseHistoryScreen.dart';
+import '../../screens/presets.dart';
 import '../exercise/exercise_view_2.dart';
 import '../meal_plan/meal_plan_view_2.dart';
 import '../tips/tips_view.dart';
@@ -18,6 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz_data;
+import '../../services/ad_service.dart';
 
 // Use ValueNotifiers for theme and notification state
 final ValueNotifier<bool> isDarkModeNotifier = ValueNotifier<bool>(false);
@@ -25,13 +25,6 @@ final ValueNotifier<bool> isReminderOnNotifier = ValueNotifier<bool>(false);
 
 class MenuView extends StatefulWidget {
   const MenuView({super.key});
-
-  static Widget withBlocProvider() {
-    return MultiBlocProvider(
-      providers: [BlocProvider<AuthCubit>(create: (context) => AuthCubit())],
-      child: const MenuView(),
-    );
-  }
 
   @override
   State<MenuView> createState() => _MenuViewState();
@@ -42,6 +35,7 @@ class _MenuViewState extends State<MenuView>
   late AnimationController _animationController;
   late PageController _pageController;
   int _currentPage = 0;
+  final AdService _adService = AdService();
 
   // Add interstitial ad
   InterstitialAd? _interstitialAd;
@@ -150,20 +144,12 @@ class _MenuViewState extends State<MenuView>
     _startCarouselTimer();
     _loadSettings();
     _initializeNotifications();
-    _loadBannerAd();
-    _loadInterstitialAd();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        final authCubit = BlocProvider.of<AuthCubit>(context, listen: false);
-        authCubit.getUserInfoFire();
-      }
-    });
+    _adService.initialize();
   }
 
   void _loadBannerAd() {
     _bannerAd = BannerAd(
-      adUnitId: 'ca-app-pub-8639311525630636/6699798389',
+      adUnitId: AdMobConfig.bannerAdUnitId,
       size: AdSize.banner,
       request: const AdRequest(),
       listener: BannerAdListener(
@@ -184,7 +170,7 @@ class _MenuViewState extends State<MenuView>
 
   void _loadInterstitialAd() {
     InterstitialAd.load(
-      adUnitId: 'ca-app-pub-8639311525630636/1371450080',
+      adUnitId: AdMobConfig.interstitialAdUnitId,
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
@@ -231,6 +217,7 @@ class _MenuViewState extends State<MenuView>
     _pageController.dispose();
     _bannerAd?.dispose();
     _interstitialAd?.dispose();
+    _adService.dispose();
     super.dispose();
   }
 
@@ -401,65 +388,13 @@ class _MenuViewState extends State<MenuView>
                     // Consider showing interstitial ad
                     _showInterstitialAd();
 
+                    // Check if drawer is open and close it if needed
                     if (Scaffold.of(context).isDrawerOpen) {
                       Navigator.pop(context);
                     }
 
-                    switch (mObj["tag"].toString()) {
-                      case "2":
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const WorkoutPicker(),
-                          ),
-                        );
-                        break;
-                      case "5":
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MealPlanView2(),
-                          ),
-                        );
-                        break;
-                      case "8":
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ExerciseView2(),
-                          ),
-                        );
-                        break;
-                      case "9":
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const TipsView(),
-                          ),
-                        );
-                        break;
-                      case "1":
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const YogaView(),
-                          ),
-                        );
-                        break;
-                      case "12":
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) => BlocProvider(
-                                  create: (context) => SaveCubit(),
-                                  child: const ExerciseHistoryScreen(),
-                                ),
-                          ),
-                        );
-                        break;
-                      default:
-                    }
+                    // Handle menu item tap
+                    _handleMenuItemTap(mObj["tag"].toString());
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(15),
@@ -1213,6 +1148,99 @@ class _MenuViewState extends State<MenuView>
     );
   }
 
+  Widget _buildBannerAd() {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Colors.transparent,
+            fitColors["secondary"]!.withOpacity(0.1),
+            Colors.transparent,
+          ],
+        ),
+      ),
+      child: Column(
+        children: [
+          const SizedBox(height: 8),
+          Text(
+            "Advertisement",
+            style: TextStyle(
+              fontSize: 10,
+              color:
+                  isDarkModeNotifier.value
+                      ? Colors.white.withOpacity(0.5)
+                      : Colors.black.withOpacity(0.5),
+            ),
+          ),
+          const SizedBox(height: 4),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: _adService.getBannerAd(),
+            ),
+          ),
+          const SizedBox(height: 60),
+        ],
+      ),
+    );
+  }
+
+  void _navigateToScreen(Widget screen) {
+    _adService.showInterstitialAd();
+    Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
+  }
+
+  void _handleMenuItemTap(String tag) {
+    HapticFeedback.lightImpact();
+
+    // Use Builder to get the correct context
+    Builder(
+      builder: (BuildContext context) {
+        if (Scaffold.of(context).isDrawerOpen) {
+          Navigator.pop(context);
+        }
+        return const SizedBox.shrink();
+      },
+    );
+
+    switch (tag) {
+      case "2":
+        _navigateToScreen(const WorkoutPicker());
+        break;
+      case "5":
+        _navigateToScreen(const MealPlanView2());
+        break;
+      case "8":
+        _navigateToScreen(const ExerciseView2());
+        break;
+      case "9":
+        _navigateToScreen(const TipsView());
+        break;
+      case "1":
+        _navigateToScreen(const YogaView());
+        break;
+      case "12":
+        _navigateToScreen(
+          BlocProvider(
+            create: (context) => SaveCubit(),
+            child: const ExerciseHistoryScreen(),
+          ),
+        );
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.sizeOf(context);
@@ -1353,56 +1381,6 @@ class _MenuViewState extends State<MenuView>
                                 },
                               ),
                             ),
-                            Divider(color: fitColors["light"], height: 1),
-                            const SizedBox(height: 15),
-                            SizedBox(
-                              height: kTextTabBarHeight,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      HapticFeedback.mediumImpact();
-                                      Navigator.pop(context);
-                                      final authCubit =
-                                          BlocProvider.of<AuthCubit>(
-                                            context,
-                                            listen: false,
-                                          );
-                                      authCubit.signOut().then((_) {
-                                        Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder:
-                                                (context) =>
-                                                    const LoginScreen(),
-                                          ),
-                                          (route) => false,
-                                        );
-                                      });
-                                    },
-                                    child: Text(
-                                      "Log Out",
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: fitColors["primary"],
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 20),
-                                    child: Image.asset(
-                                      "assets/img/next.png",
-                                      width: 18,
-                                      height: 18,
-                                      color: fitColors["primary"],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
                           ],
                         ),
                       ),
@@ -1457,84 +1435,63 @@ class _MenuViewState extends State<MenuView>
                       bottom: 30,
                       left: 0,
                       right: 0,
-                      child: BlocBuilder<AuthCubit, AuthState>(
-                        builder: (context, state) {
-                          final authCubit = BlocProvider.of<AuthCubit>(
-                            context,
-                            listen: false,
-                          );
-                          String userEmail = authCubit.user?.email ?? "";
-                          String displayName = "User";
-                          if (userEmail.isNotEmpty && userEmail.contains('@')) {
-                            displayName = userEmail.split('@').first;
-                            if (displayName.isNotEmpty) {
-                              displayName =
-                                  displayName[0].toUpperCase() +
-                                  displayName.substring(1);
-                            }
-                          }
-
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 25,
-                              vertical: 10,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 25,
+                          vertical: 10,
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.15,
+                              height: 54,
+                              decoration: BoxDecoration(
+                                color: TColor.white,
+                                borderRadius: BorderRadius.circular(27),
+                                border: Border.all(
+                                  color: fitColors["secondary"]!,
+                                  width: 2,
+                                ),
+                              ),
+                              alignment: Alignment.center,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(25),
+                                child: Image.asset(
+                                  "assets/img/u1.png",
+                                  width: 50,
+                                  height: 50,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.15,
-                                  height: 54,
-                                  decoration: BoxDecoration(
-                                    color: TColor.white,
-                                    borderRadius: BorderRadius.circular(27),
-                                    border: Border.all(
-                                      color: fitColors["secondary"]!,
-                                      width: 2,
+                            const SizedBox(width: 15),
+                            Flexible(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "Welcome",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: TColor.white,
+                                      fontWeight: FontWeight.w700,
                                     ),
                                   ),
-                                  alignment: Alignment.center,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(25),
-                                    child: Image.asset(
-                                      "assets/img/u1.png",
-                                      width: 50,
-                                      height: 50,
-                                      fit: BoxFit.cover,
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    "Let's get fit!",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: TColor.white,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                ),
-                                const SizedBox(width: 15),
-                                Flexible(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        displayName,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: TColor.white,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        "Profile",
-                                        style: TextStyle(
-                                          fontSize: 10,
-                                          color: TColor.white,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          );
-                        },
+                          ],
+                        ),
                       ),
                     ),
                     Positioned(
@@ -1625,67 +1582,7 @@ class _MenuViewState extends State<MenuView>
                           ),
                         ),
                       ),
-                      // Ad section with better visual integration
-                      if (_isBannerAdLoaded)
-                        Column(
-                          children: [
-                            // Divider with gradient for better visual separation
-                            Container(
-                              height: 1,
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                              ),
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Colors.transparent,
-                                    fitColors["secondary"]!.withOpacity(0.5),
-                                    Colors.transparent,
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            // Ad label for transparency
-                            Text(
-                              "Advertisement",
-                              style: TextStyle(
-                                fontSize: 10,
-                                color:
-                                    isDarkMode
-                                        ? Colors.white.withOpacity(0.5)
-                                        : Colors.black.withOpacity(0.5),
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            // Banner ad with improved container
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.05),
-                                    blurRadius: 4,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  width: _bannerAd!.size.width.toDouble(),
-                                  height: _bannerAd!.size.height.toDouble(),
-                                  child: AdWidget(ad: _bannerAd!),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 60),
-                          ],
-                        ),
+                      if (_adService.isBannerAdLoaded) _buildBannerAd(),
                     ],
                   ),
                 ),

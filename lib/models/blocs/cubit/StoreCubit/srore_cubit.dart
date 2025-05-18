@@ -1,13 +1,9 @@
 import 'package:FitBro/models/blocs/cubit/StoreCubit/srore_state.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
-import '../../../../consts/Collections.dart';
-import '../../../data/Local/SharedKeys.dart';
-import '../../../data/Local/SharedPerfrence.dart';
 import '../../../data/data.dart';
-
-
 
 class SaveCubit extends Cubit<StoreState> {
   SaveCubit() : super(StoreInitial());
@@ -15,6 +11,7 @@ class SaveCubit extends Cubit<StoreState> {
   static SaveCubit get(context) => BlocProvider.of(context);
 
   List<WorkoutSession> workoutSession = [];
+  static const String _workoutKey = 'workout_sessions';
 
   Future<void> setUserExcersiceInfo({
     required String startDate,
@@ -23,27 +20,27 @@ class SaveCubit extends Cubit<StoreState> {
   }) async {
     emit(LoadingSetExcersiceInfo());
     try {
-      await FirebaseFirestore.instance
-          .collection(Collections.users)
-          .doc(LocalData.getData(key: SharedKey.uid))
-          .collection("Excersice")
-          .add({
-            "Start": startDate,
-            "Ends": endDate,
-            "WorkOutList": [
-              for (var item in listWorkOuts)
-                {
-                  "name": item.exercise.name,
-                  "muscles": item.exercise.muscles,
-                  "equipment": item.exercise.equipment,
-                  "id": item.exercise.id,
-                  "image": item.exercise.image,
-                  "weights": item.weights, // Store as list directly
-                  "instruction": item.exercise.instruction,
-                  "difficulty": item.exercise.difficulty,
-                },
-            ],
-          });
+      final prefs = await SharedPreferences.getInstance();
+      final workoutSession = WorkoutSession(
+        startTime: DateTime.parse(startDate),
+        finishTime: DateTime.parse(endDate),
+        workoutData: listWorkOuts,
+      );
+
+      // Get existing sessions
+      final String? sessionsJson = prefs.getString(_workoutKey);
+      List<WorkoutSession> sessions = [];
+      if (sessionsJson != null) {
+        final List<dynamic> decoded = jsonDecode(sessionsJson);
+        sessions = decoded.map((item) => WorkoutSession.fromJson(item as Map<String, dynamic>)).toList();
+      }
+
+      // Add new session
+      sessions.add(workoutSession);
+
+      // Save updated sessions
+      final sessionsToSave = sessions.map((s) => s.toJson()).toList();
+      await prefs.setString(_workoutKey, jsonEncode(sessionsToSave));
       emit(SuccessSetExcersiceInfo());
     } catch (e) {
       emit(ErrorSetExcersiceInfo(e.toString()));
@@ -53,43 +50,14 @@ class SaveCubit extends Cubit<StoreState> {
   Future<void> getUserExcersiceInfo() async {
     try {
       emit(LoadingGetExcersiceInfo());
-      workoutSession.clear(); // Clear previous sessions to avoid duplicates
-      var userDoc = FirebaseFirestore.instance
-          .collection(Collections.users)
-          .doc(LocalData.getData(key: SharedKey.uid));
+      workoutSession.clear();
 
-      var exerciseSnapshot = await userDoc.collection("Excersice").get();
-
-      for (var doc in exerciseSnapshot.docs) {
-        var docData = doc.data();
-        List<WorkoutData> workoutData = [];
-
-        for (var workoutItem in docData["WorkOutList"] ?? []) {
-          workoutData.add(
-            WorkoutData(
-              exercise: Exercise(
-                id: workoutItem["id"] != null ? workoutItem["id"] as int : 0,
-                name: workoutItem["name"] ?? "Unnamed Exercise",
-                muscles: List<String>.from(workoutItem["muscles"] ?? []),
-                equipment: workoutItem["equipment"] ?? "No equipment",
-                image: workoutItem["image"] ?? "",
-                instruction: workoutItem["instruction"] ?? "No instruction",
-                difficulty: workoutItem["difficulty"] ?? "Basic",
-              ),
-              weights: List<String>.from(workoutItem["weights"] ?? []),
-            ),
-          );
-        }
-
-        workoutSession.add(
-          WorkoutSession(
-            startTime:
-                DateTime.tryParse(docData["Start"] ?? '') ?? DateTime.now(),
-            finishTime:
-                DateTime.tryParse(docData["Ends"] ?? '') ?? DateTime.now(),
-            workoutData: workoutData,
-          ),
-        );
+      final prefs = await SharedPreferences.getInstance();
+      final String? sessionsJson = prefs.getString(_workoutKey);
+      
+      if (sessionsJson != null) {
+        final List<dynamic> decoded = jsonDecode(sessionsJson);
+        workoutSession = decoded.map((item) => WorkoutSession.fromJson(item as Map<String, dynamic>)).toList();
       }
 
       emit(SuccessGetExcersiceInfo(workoutSession));

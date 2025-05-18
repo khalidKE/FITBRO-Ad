@@ -34,9 +34,7 @@ class ExerciseCubit extends Cubit<ExerciseState> {
 
   void addWorkoutData(WorkoutData workoutdata) {
     workout.add(workoutdata);
-    if (workout.isNotEmpty) {
-      print(workout[0].weights.toList().toString());
-    }
+   
   }
 
   void setSelectedIndex(int index) {

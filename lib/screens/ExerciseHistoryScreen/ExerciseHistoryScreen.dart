@@ -111,51 +111,85 @@ class _ExerciseHistoryScreenState extends State<ExerciseHistoryScreen> {
                           ),
                           children:
                               workoutSession.workoutData.map((workoutData) {
-                                return ListTile(
-                                  contentPadding: const EdgeInsets.all(10),
-                                  leading: ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: CachedNetworkImage(
-                                      imageUrl: workoutData.exercise.image,
-                                      width: 50,
-                                      height: 50,
-                                      fit: BoxFit.cover,
-                                      placeholder:
-                                          (context, url) =>
-                                              const CircularProgressIndicator(),
-                                      errorWidget:
-                                          (context, url, error) => const Icon(
-                                            Icons.image_not_supported,
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        color: isDarkMode ? Colors.white24 : Colors.grey.shade200,
+                                        width: 1,
+                                      ),
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(8),
+                                          child: CachedNetworkImage(
+                                            imageUrl: workoutData.exercise.image,
+                                            width: 50,
+                                            height: 50,
+                                            fit: BoxFit.cover,
+                                            placeholder: (context, url) => const CircularProgressIndicator(),
+                                            errorWidget: (context, url, error) => const Icon(Icons.image_not_supported),
                                           ),
-                                    ),
-                                  ),
-                                  title: Text(
-                                    workoutData.exercise.name,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                      color:
-                                          isDarkMode
-                                              ? Colors.white
-                                              : Colors.black87,
-                                    ),
-                                  ),
-                                  subtitle: Text(
-                                    "Muscles: ${workoutData.exercise.muscles.join(", ")}\n"
-                                    "Equipment: ${workoutData.exercise.equipment}\n"
-                                    "Weights: ${workoutData.weights.join(", ")}",
-                                    style: TextStyle(
-                                      color:
-                                          isDarkMode
-                                              ? Colors.white70
-                                              : Colors.black54,
-                                    ),
-                                  ),
-                                  trailing: Text(
-                                    workoutData.exercise.difficulty,
-                                    style: TextStyle(
-                                      color: fitColors["primary"],
-                                      fontWeight: FontWeight.bold,
+                                        ),
+                                        const SizedBox(width: 16),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                workoutData.exercise.name,
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: isDarkMode ? Colors.white : Colors.black87,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 4),
+                                              Text(
+                                                "Muscles: ${workoutData.exercise.muscles.join(", ")}",
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: isDarkMode ? Colors.white70 : Colors.black54,
+                                                ),
+                                              ),
+                                              Text(
+                                                "Equipment: ${workoutData.exercise.equipment}",
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: isDarkMode ? Colors.white70 : Colors.black54,
+                                                ),
+                                              ),
+                                              Text(
+                                                "Weights: ${workoutData.weights.join(", ")}",
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: isDarkMode ? Colors.white70 : Colors.black54,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                          decoration: BoxDecoration(
+                                            color: fitColors["primary"]!.withOpacity(0.1),
+                                            borderRadius: BorderRadius.circular(12),
+                                          ),
+                                          child: Text(
+                                            workoutData.exercise.difficulty,
+                                            style: TextStyle(
+                                              color: fitColors["primary"],
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 );

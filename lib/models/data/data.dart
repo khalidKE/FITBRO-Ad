@@ -15,8 +15,7 @@ class Exercise with _$Exercise {
     required String image,
   }) = _Exercise;
 
-  factory Exercise.fromJson(Map<String, dynamic> json) =>
-      _$ExerciseFromJson(json);
+  factory Exercise.fromJson(Map<String, dynamic> json) => _$ExerciseFromJson(json);
 }
 
 @freezed
@@ -28,27 +27,28 @@ class Session with _$Session {
     required List<Exercise> exercises,
   }) = _Session;
 
-  factory Session.fromJson(Map<String, dynamic> json) =>
-      _$SessionFromJson(json);
+  factory Session.fromJson(Map<String, dynamic> json) => _$SessionFromJson(json);
 }
 
-class WorkoutData {
-  final Exercise exercise;
-  final List<String> weights;
+@freezed
+class WorkoutData with _$WorkoutData {
+  const factory WorkoutData({
+    required Exercise exercise,
+    required List<String> weights,
+  }) = _WorkoutData;
 
-  WorkoutData({required this.exercise, required this.weights});
+  factory WorkoutData.fromJson(Map<String, dynamic> json) => _$WorkoutDataFromJson(json);
 }
 
-class WorkoutSession {
-  final DateTime startTime;
-  final DateTime finishTime;
-  final List<WorkoutData> workoutData;
+@freezed
+class WorkoutSession with _$WorkoutSession {
+  const factory WorkoutSession({
+    required DateTime startTime,
+    required DateTime finishTime,
+    required List<WorkoutData> workoutData,
+  }) = _WorkoutSession;
 
-  WorkoutSession({
-    required this.startTime,
-    required this.finishTime,
-    required this.workoutData,
-  });
+  factory WorkoutSession.fromJson(Map<String, dynamic> json) => _$WorkoutSessionFromJson(json);
 }
 
 @freezed
@@ -61,16 +61,5 @@ class Meal with _$Meal {
     required String image_url,
   }) = _Meal;
 
-  factory Meal.fromJson(Map<String, dynamic> json) {
-    return Meal(
-      name: json['name'] as String? ?? '',
-      ingredients:
-          (json['ingredients'] as List<dynamic>)
-              .map((e) => e as String)
-              .toList(),
-      instructions: json['instructions'] as String? ?? '',
-      calories: json['calories'] as int? ?? 0,
-      image_url: json['image_url'] as String? ?? '',
-    );
-  }
+  factory Meal.fromJson(Map<String, dynamic> json) => _$MealFromJson(json);
 }

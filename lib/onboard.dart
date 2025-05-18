@@ -1,7 +1,7 @@
-import 'package:FitBro/screens/Auth_Screen/Login_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'view/menu/menu_view.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -92,7 +92,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
     super.dispose();
   }
 
-  void _navigateToLogin() async {
+  void _navigateToMenu() async {
     if (_isNavigating) return;
     setState(() => _isNavigating = true);
     await Future.delayed(const Duration(milliseconds: 500));
@@ -100,22 +100,16 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
-          pageBuilder:
-              (context, animation, secondaryAnimation) => const LoginScreen(),
+          pageBuilder: (context, animation, secondaryAnimation) => const MenuView(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             const begin = Offset(0.0, 1.0);
             const end = Offset.zero;
             const curve = Curves.easeOutQuint;
 
-            var tween = Tween(
-              begin: begin,
-              end: end,
-            ).chain(CurveTween(curve: curve));
+            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
             var offsetAnimation = animation.drive(tween);
-            var fadeAnimation = Tween<double>(
-              begin: 0.0,
-              end: 1.0,
-            ).animate(CurvedAnimation(parent: animation, curve: curve));
+            var fadeAnimation = Tween<double>(begin: 0.0, end: 1.0)
+                .animate(CurvedAnimation(parent: animation, curve: curve));
 
             return SlideTransition(
               position: offsetAnimation,
@@ -373,7 +367,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                                           onPressed:
                                               _isNavigating
                                                   ? null
-                                                  : _navigateToLogin,
+                                                  : _navigateToMenu,
                                           style: TextButton.styleFrom(
                                             foregroundColor: _lightColor
                                                 .withOpacity(0.8),
@@ -416,7 +410,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                                                     if (_currentPage ==
                                                         _onboardingData.length -
                                                             1) {
-                                                      _navigateToLogin();
+                                                      _navigateToMenu();
                                                     } else {
                                                       _controller.nextPage(
                                                         duration:
