@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:FitBro/onboard.dart';
+import 'package:FitBro/view/menu/menu_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,7 +19,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
       if (mounted) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const OnBoardingScreen()),
+          MaterialPageRoute(builder: (context) => const MenuView()),
         );
       }
     });

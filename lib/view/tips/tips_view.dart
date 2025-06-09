@@ -14,12 +14,12 @@ class TipsView extends StatefulWidget {
 class _TipsViewState extends State {
   final List<Map<String, String>> tipsArr = [
     {"name": "About Training"},
-    {"name": "How to weight loss?"},
-    {"name": "Introducing meal plan"},
+    {"name": "How to Weight Loss?"},
+    {"name": "Introducing Meal Plan"},
     {"name": "Water and Food"},
-    {"name": "Drink water"},
-    {"name": "How many times a day to eat"},
-    {"name": "Become stronger"},
+    {"name": "Drink Water"},
+    {"name": "How Many Times a Day to Eat"},
+    {"name": "Become Stronger"},
     {"name": "Shoes for Training"},
     {"name": "Appeal Tips"},
   ];
