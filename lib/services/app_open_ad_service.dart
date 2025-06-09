@@ -8,7 +8,7 @@ class AppOpenAdService {
   bool _isAdAvailable = false;
   DateTime? _lastAdLoadTime;
   static const int _adLoadTimeout = 4; // Timeout in hours
-  final bool _isTestMode = true; // Set to true for testing
+  final bool _isTestMode = false; // Set to false for production
 
   /// Load an app open ad.
   Future<void> loadAd() async {
@@ -19,9 +19,11 @@ class AppOpenAdService {
     }
 
     try {
-      debugPrint('AppOpenAdService: Loading ad with ID: ${AdMobConfig.getAdUnitId('appOpen', isTest: _isTestMode)}');
+      final adUnitId = AdMobConfig.getAdUnitId('appOpen', isTest: _isTestMode);
+      debugPrint('AppOpenAdService: Loading ad with ID: $adUnitId');
+      
       await AppOpenAd.load(
-        adUnitId: AdMobConfig.getAdUnitId('appOpen', isTest: _isTestMode),
+        adUnitId: adUnitId,
         request: const AdRequest(),
         adLoadCallback: AppOpenAdLoadCallback(
           onAdLoaded: (ad) {
@@ -37,7 +39,7 @@ class AppOpenAdService {
                 ad.dispose();
                 _appOpenAd = null;
                 _isAdAvailable = false;
-                loadAd();
+                loadAd(); // Load the next ad
               },
               onAdFailedToShowFullScreenContent: (ad, error) {
                 debugPrint('AppOpenAdService: Ad failed to show: ${error.message}');
@@ -45,7 +47,7 @@ class AppOpenAdService {
                 ad.dispose();
                 _appOpenAd = null;
                 _isAdAvailable = false;
-                loadAd();
+                loadAd(); // Try to load another ad
               },
               onAdShowedFullScreenContent: (ad) {
                 debugPrint('AppOpenAdService: Ad showed successfully');

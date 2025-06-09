@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:FitBro/models/blocs/cubit/workoutcubit.dart';
 import 'package:FitBro/models/repos/data_repo.dart';
 import 'package:FitBro/screens/Auth_Screen/Splash_Screen/Splash_Screen.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:FitBro/models/data/Local/SharedPerfrence.dart';
 import 'package:FitBro/services/app_open_ad_service.dart';
+import 'package:FitBro/config/admob_config.dart';
 import 'common/color_extension.dart';
 
 // Create a global instance of AppOpenAdService
@@ -17,8 +17,8 @@ Future<void> main() async {
   // Initialize shared preferences
   await LocalData.init();
   
-  // Initialize ads
-  await MobileAds.instance.initialize();
+  // Initialize ads with test mode disabled for production
+  await AdMobConfig.initialize(isTest: false);
   
   // Load the first app open ad
   await appOpenAdService.loadAd();
