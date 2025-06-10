@@ -20,8 +20,8 @@ Future<void> main() async {
   // Initialize ads with test mode disabled for production
   await AdMobConfig.initialize(isTest: false);
   
-  // Load the first app open ad
-  await appOpenAdService.loadAd();
+  // Load app open ad in the background to prevent startup delay
+  Future.microtask(() => appOpenAdService.loadAd());
   
   runApp(const MyApp());
 }
@@ -34,6 +34,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  bool _isFirstLaunch = true;
+
   @override
   void initState() {
     super.initState();
@@ -50,8 +52,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      // Show app open ad when the app is resumed
-      appOpenAdService.showAdIfAvailable();
+      // Only show app open ad if it's not the first launch
+      if (!_isFirstLaunch) {
+        appOpenAdService.showAdIfAvailable();
+      }
+      _isFirstLaunch = false;
     }
   }
 

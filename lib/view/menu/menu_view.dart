@@ -37,15 +37,6 @@ class _MenuViewState extends State<MenuView>
   int _currentPage = 0;
   final AdService _adService = AdService();
 
-  // Add interstitial ad
-  InterstitialAd? _interstitialAd;
-  bool _isInterstitialAdLoaded = false;
-  int _interstitialAdCounter = 0; // To control ad frequency
-
-  // Add banner ad
-  BannerAd? _bannerAd;
-  bool _isBannerAdLoaded = false;
-
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
@@ -147,76 +138,10 @@ class _MenuViewState extends State<MenuView>
     _adService.initialize();
   }
 
-  void _loadBannerAd() {
-    _bannerAd = BannerAd(
-      adUnitId: AdMobConfig.bannerAdUnitId,
-      size: AdSize.banner,
-      request: const AdRequest(),
-      listener: BannerAdListener(
-        onAdLoaded: (_) {
-          setState(() {
-            _isBannerAdLoaded = true;
-          });
-        },
-        onAdFailedToLoad: (ad, error) {
-          ad.dispose();
-          print('Banner ad failed to load: ${error.message}');
-        },
-      ),
-    );
-
-    _bannerAd?.load();
-  }
-
-  void _loadInterstitialAd() {
-    InterstitialAd.load(
-      adUnitId: AdMobConfig.interstitialAdUnitId,
-      request: const AdRequest(),
-      adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: (ad) {
-          _interstitialAd = ad;
-          _isInterstitialAdLoaded = true;
-
-          // Set callback for ad closing
-          _interstitialAd!
-              .fullScreenContentCallback = FullScreenContentCallback(
-            onAdDismissedFullScreenContent: (ad) {
-              _isInterstitialAdLoaded = false;
-              ad.dispose();
-              _loadInterstitialAd(); // Reload ad for next time
-            },
-            onAdFailedToShowFullScreenContent: (ad, error) {
-              _isInterstitialAdLoaded = false;
-              ad.dispose();
-              _loadInterstitialAd(); // Reload ad for next time
-            },
-          );
-        },
-        onAdFailedToLoad: (error) {
-          print('Interstitial ad failed to load: ${error.message}');
-          _isInterstitialAdLoaded = false;
-        },
-      ),
-    );
-  }
-
-  void _showInterstitialAd() {
-    // Only show interstitial ad every 3 navigation actions to avoid annoying users
-    _interstitialAdCounter++;
-    if (_interstitialAdCounter >= 3) {
-      if (_isInterstitialAdLoaded && _interstitialAd != null) {
-        _interstitialAd!.show();
-        _interstitialAdCounter = 0; // Reset counter after showing ad
-      }
-    }
-  }
-
   @override
   void dispose() {
     _animationController.dispose();
     _pageController.dispose();
-    _bannerAd?.dispose();
-    _interstitialAd?.dispose();
     _adService.dispose();
     super.dispose();
   }
@@ -384,9 +309,6 @@ class _MenuViewState extends State<MenuView>
                   borderRadius: BorderRadius.circular(20),
                   onTap: () {
                     HapticFeedback.lightImpact();
-
-                    // Consider showing interstitial ad
-                    _showInterstitialAd();
 
                     // Check if drawer is open and close it if needed
                     if (Scaffold.of(context).isDrawerOpen) {
@@ -1149,55 +1071,13 @@ class _MenuViewState extends State<MenuView>
   }
 
   Widget _buildBannerAd() {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.transparent,
-            fitColors["secondary"]!.withOpacity(0.1),
-            Colors.transparent,
-          ],
-        ),
-      ),
-      child: Column(
-        children: [
-          const SizedBox(height: 8),
-          Text(
-            "Advertisement",
-            style: TextStyle(
-              fontSize: 10,
-              color:
-                  isDarkModeNotifier.value
-                      ? Colors.white.withOpacity(0.5)
-                      : Colors.black.withOpacity(0.5),
-            ),
-          ),
-          const SizedBox(height: 4),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 4,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            margin: const EdgeInsets.symmetric(horizontal: 10),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: _adService.getBannerAd(),
-            ),
-          ),
-          const SizedBox(height: 60),
-        ],
-      ),
-    );
+    return _adService.getBannerAd();
   }
 
   void _navigateToScreen(Widget screen) {
-    _adService.showInterstitialAd();
+    if (!_adService.isAnyAdShowing) {
+      _adService.showInterstitialAd();
+    }
     Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
   }
 
