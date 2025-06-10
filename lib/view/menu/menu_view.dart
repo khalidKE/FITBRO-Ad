@@ -135,7 +135,19 @@ class _MenuViewState extends State<MenuView>
     _startCarouselTimer();
     _loadSettings();
     _initializeNotifications();
+
+    // Initialize ads and set up listener
     _adService.initialize();
+    _setupAdListener();
+  }
+
+  void _setupAdListener() {
+    // Add listener to rebuild when ad status changes
+    _adService.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+    });
   }
 
   @override
@@ -1071,7 +1083,22 @@ class _MenuViewState extends State<MenuView>
   }
 
   Widget _buildBannerAd() {
-    return _adService.getBannerAd();
+    if (!_adService.isBannerAdLoaded) {
+      return const SizedBox.shrink();
+    }
+
+    return Container(
+      width: double.infinity,
+      height: 60,
+      alignment: Alignment.center,
+      margin: const EdgeInsets.only(bottom: 10),
+      child: Container(
+        width: _adService.bannerWidth,
+        height: _adService.bannerHeight,
+        alignment: Alignment.center,
+        child: _adService.getBannerAd(),
+      ),
+    );
   }
 
   void _navigateToScreen(Widget screen) {
@@ -1462,11 +1489,13 @@ class _MenuViewState extends State<MenuView>
                           ),
                         ),
                       ),
+                      // Only show banner when ad is loaded
                       if (_adService.isBannerAdLoaded) _buildBannerAd(),
                     ],
                   ),
                 ),
               ),
+              SizedBox(height: 35),
             ],
           ),
         );

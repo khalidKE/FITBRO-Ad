@@ -2,17 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../config/admob_config.dart';
 
-class AdService {
+class AdService extends ChangeNotifier {
   static final AdService _instance = AdService._internal();
   factory AdService() => _instance;
   AdService._internal();
 
-  final bool _isTestMode = false; // Set to false for production
+  // Change to true temporarily to test ads
+  final bool _isTestMode = false; // Set to true for testing
 
   // Banner Ad
   BannerAd? _bannerAd;
   bool _isBannerAdLoaded = false;
   bool get isBannerAdLoaded => _isBannerAdLoaded;
+  
+  // Add getters for banner dimensions
+  double get bannerWidth => _bannerAd?.size.width.toDouble() ?? 320;
+  double get bannerHeight => _bannerAd?.size.height.toDouble() ?? 50;
 
   // Interstitial Ad
   InterstitialAd? _interstitialAd;
@@ -44,38 +49,43 @@ Counter: $_interstitialAdCounter
   // Banner Ad Methods
   Future<void> _loadBannerAd() async {
     try {
-      final adUnitId = AdMobConfig.getAdUnitId('banner', isTest: _isTestMode);
-      debugPrint('AdService: Starting banner ad load with ID: $adUnitId');
-
+      debugPrint('AdService: Starting banner ad load');
+      
       // Dispose old ad if exists
       if (_bannerAd != null) {
-        debugPrint('AdService: Disposing old banner ad');
-        _isBannerAdLoaded = false;
         await _bannerAd!.dispose();
         _bannerAd = null;
+        _isBannerAdLoaded = false;
+        notifyListeners();
       }
+
+      // Get test ad unit ID
+      final adUnitId = _isTestMode 
+          ? 'ca-app-pub-3940256099942544/6300978111'  // Test banner ad unit ID
+          : AdMobConfig.getAdUnitId('banner', isTest: false);
+
+      debugPrint('AdService: Loading banner ad with ID: $adUnitId');
 
       _bannerAd = BannerAd(
         adUnitId: adUnitId,
         size: AdSize.banner,
         request: const AdRequest(),
         listener: BannerAdListener(
-          onAdLoaded: (_) {
+          onAdLoaded: (ad) {
             debugPrint('AdService: Banner ad loaded successfully');
             _isBannerAdLoaded = true;
-            _logAdStatus();
+            notifyListeners();
           },
           onAdFailedToLoad: (ad, error) {
             debugPrint('AdService: Banner ad failed to load: ${error.message}');
-            debugPrint('AdService: Banner ad error code: ${error.code}');
             _isBannerAdLoaded = false;
             ad.dispose();
             _bannerAd = null;
-            _logAdStatus();
-            // Try to reload after a delay
-            Future.delayed(const Duration(minutes: 1), () {
+            notifyListeners();
+            
+            // Retry after 5 seconds
+            Future.delayed(const Duration(seconds: 5), () {
               if (!_isBannerAdLoaded) {
-                debugPrint('AdService: Attempting to reload banner ad');
                 _loadBannerAd();
               }
             });
@@ -83,14 +93,12 @@ Counter: $_interstitialAdCounter
         ),
       );
 
-      debugPrint('AdService: Initiating banner ad load');
       await _bannerAd?.load();
-    } catch (e, stackTrace) {
+    } catch (e) {
       debugPrint('AdService: Error loading banner ad: $e');
-      debugPrint('AdService: Stack trace: $stackTrace');
       _isBannerAdLoaded = false;
       _bannerAd = null;
-      _logAdStatus();
+      notifyListeners();
     }
   }
 
@@ -99,62 +107,18 @@ Counter: $_interstitialAdCounter
       return const SizedBox.shrink();
     }
 
-    try {
-      return Container(
-        width: double.infinity,
+    return Container(
+      width: double.infinity,
+      height: _bannerAd!.size.height.toDouble(),
+      alignment: Alignment.center,
+      margin: const EdgeInsets.only(bottom: 10),
+      child: Container(
+        width: _bannerAd!.size.width.toDouble(),
         height: _bannerAd!.size.height.toDouble(),
         alignment: Alignment.center,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Colors.transparent,
-              Colors.grey.withOpacity(0.05),
-              Colors.transparent,
-            ],
-          ),
-        ),
-        child: SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: 4),
-              Text(
-                "Advertisement",
-                style: TextStyle(
-                  fontSize: 10,
-                  color: Colors.grey.withOpacity(0.5),
-                ),
-              ),
-              const SizedBox(height: 4),
-              Container(
-                width: _bannerAd!.size.width.toDouble(),
-                height: _bannerAd!.size.height.toDouble(),
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 4,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: AdWidget(ad: _bannerAd!),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    } catch (e) {
-      debugPrint('AdService: Error displaying banner ad: $e');
-      _isBannerAdLoaded = false;
-      _bannerAd = null;
-      return const SizedBox.shrink();
-    }
+        child: AdWidget(ad: _bannerAd!),
+      ),
+    );
   }
 
   // Interstitial Ad Methods
@@ -169,6 +133,7 @@ Counter: $_interstitialAdCounter
         _isInterstitialAdLoaded = false;
         await _interstitialAd!.dispose();
         _interstitialAd = null;
+        notifyListeners();
       }
 
       await InterstitialAd.load(
@@ -180,6 +145,7 @@ Counter: $_interstitialAdCounter
             _interstitialAd = ad;
             _isInterstitialAdLoaded = true;
             _logAdStatus();
+            notifyListeners();
 
             _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
               onAdDismissedFullScreenContent: (ad) {
@@ -188,6 +154,7 @@ Counter: $_interstitialAdCounter
                 ad.dispose();
                 _interstitialAd = null;
                 _logAdStatus();
+                notifyListeners();
                 _loadInterstitialAd(); // Load the next ad
               },
               onAdFailedToShowFullScreenContent: (ad, error) {
@@ -197,11 +164,13 @@ Counter: $_interstitialAdCounter
                 ad.dispose();
                 _interstitialAd = null;
                 _logAdStatus();
+                notifyListeners();
                 _loadInterstitialAd(); // Try to load another ad
               },
               onAdShowedFullScreenContent: (ad) {
                 debugPrint('AdService: Interstitial ad showed successfully');
                 _logAdStatus();
+                notifyListeners();
               },
             );
           },
@@ -211,6 +180,7 @@ Counter: $_interstitialAdCounter
             _isInterstitialAdLoaded = false;
             _interstitialAd = null;
             _logAdStatus();
+            notifyListeners();
             // Try to reload after a delay
             Future.delayed(const Duration(minutes: 1), () {
               if (!_isInterstitialAdLoaded) {
@@ -227,6 +197,7 @@ Counter: $_interstitialAdCounter
       _isInterstitialAdLoaded = false;
       _interstitialAd = null;
       _logAdStatus();
+      notifyListeners();
     }
   }
 
@@ -262,6 +233,7 @@ Counter: $_interstitialAdCounter
         _isRewardedAdLoaded = false;
         await _rewardedAd!.dispose();
         _rewardedAd = null;
+        notifyListeners();
       }
 
       await RewardedAd.load(
@@ -273,6 +245,7 @@ Counter: $_interstitialAdCounter
             _rewardedAd = ad;
             _isRewardedAdLoaded = true;
             _logAdStatus();
+            notifyListeners();
 
             _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
               onAdDismissedFullScreenContent: (ad) {
@@ -281,6 +254,7 @@ Counter: $_interstitialAdCounter
                 ad.dispose();
                 _rewardedAd = null;
                 _logAdStatus();
+                notifyListeners();
                 _loadRewardedAd(); // Load the next ad
               },
               onAdFailedToShowFullScreenContent: (ad, error) {
@@ -290,11 +264,13 @@ Counter: $_interstitialAdCounter
                 ad.dispose();
                 _rewardedAd = null;
                 _logAdStatus();
+                notifyListeners();
                 _loadRewardedAd(); // Try to load another ad
               },
               onAdShowedFullScreenContent: (ad) {
                 debugPrint('AdService: Rewarded ad showed successfully');
                 _logAdStatus();
+                notifyListeners();
               },
             );
           },
@@ -304,6 +280,7 @@ Counter: $_interstitialAdCounter
             _isRewardedAdLoaded = false;
             _rewardedAd = null;
             _logAdStatus();
+            notifyListeners();
             // Try to reload after a delay
             Future.delayed(const Duration(minutes: 1), () {
               if (!_isRewardedAdLoaded) {
@@ -320,6 +297,7 @@ Counter: $_interstitialAdCounter
       _isRewardedAdLoaded = false;
       _rewardedAd = null;
       _logAdStatus();
+      notifyListeners();
     }
   }
 
@@ -371,26 +349,40 @@ Counter: $_interstitialAdCounter
   // Initialize ads
   Future<void> initialize() async {
     try {
-      debugPrint('AdService: Starting ad initialization');
+      debugPrint('AdService: ===== Starting Ad Initialization =====');
+      debugPrint('AdService: Current banner ad status - Loaded: $_isBannerAdLoaded, Instance: ${_bannerAd != null}');
+      debugPrint('AdService: Using test mode: $_isTestMode');
+      
+      // Initialize Mobile Ads SDK with test configuration
+      debugPrint('AdService: Initializing Mobile Ads SDK...');
+      await AdMobConfig.initialize(isTest: _isTestMode);
+      debugPrint('AdService: Mobile Ads SDK initialized successfully');
+      
       // Reset all states
+      debugPrint('AdService: Disposing existing ads...');
       await dispose();
+      debugPrint('AdService: Existing ads disposed');
       
       // Load banner ad first since it's most important
-      debugPrint('AdService: Loading banner ad');
+      debugPrint('AdService: Starting banner ad load process...');
       await _loadBannerAd();
+      debugPrint('AdService: Banner ad load process completed');
       
       // Then load other ads with a delay to prevent startup lag
-      debugPrint('AdService: Scheduling other ads to load');
+      debugPrint('AdService: Scheduling other ads to load in 2 seconds...');
       Future.delayed(const Duration(seconds: 2), () {
-        debugPrint('AdService: Loading interstitial and rewarded ads');
+        debugPrint('AdService: Loading interstitial and rewarded ads...');
         _loadInterstitialAd();
         _loadRewardedAd();
       });
       
       _logAdStatus();
+      debugPrint('AdService: ===== Ad Initialization Completed =====');
     } catch (e, stackTrace) {
-      debugPrint('AdService: Error initializing ads: $e');
+      debugPrint('AdService: ===== Error in Ad Initialization =====');
+      debugPrint('AdService: Error message: $e');
       debugPrint('AdService: Stack trace: $stackTrace');
+      debugPrint('AdService: ===== End of Error Report =====');
     }
   }
 
