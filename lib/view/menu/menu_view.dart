@@ -18,6 +18,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz_data;
 import '../../services/ad_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // Use ValueNotifiers for theme and notification state
 final ValueNotifier<bool> isDarkModeNotifier = ValueNotifier<bool>(false);
@@ -76,6 +77,12 @@ class _MenuViewState extends State<MenuView>
       "icon": "assets/img/information.png",
       "right_icon": "",
       "color": 0xFF1E5128,
+    },
+    {
+      "name": "Rate App",
+      "icon": "assets/img/icon.png",
+      "right_icon": "",
+      "color": 0xFF4E9F3D,
     },
   ];
 
@@ -1145,6 +1152,12 @@ class _MenuViewState extends State<MenuView>
           ),
         );
         break;
+      case "Rate App":
+        launchUrl(
+          Uri.parse('https://play.google.com/store/apps/details?id=com.Mohamed.FitBro'),
+          mode: LaunchMode.externalApplication,
+        );
+        break;
     }
   }
 
@@ -1331,6 +1344,12 @@ class _MenuViewState extends State<MenuView>
                                               break;
                                             case "Terms and Conditions":
                                               _showTermsAndConditions();
+                                              break;
+                                            case "Rate App":
+                                              launchUrl(
+                                                Uri.parse('https://play.google.com/store/apps/details?id=com.Mohamed.FitBro'),
+                                                mode: LaunchMode.externalApplication,
+                                              );
                                               break;
                                             case "Support":
                                               ScaffoldMessenger.of(
