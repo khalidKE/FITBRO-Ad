@@ -1154,349 +1154,429 @@ class _MenuViewState extends State<MenuView>
     return ValueListenableBuilder<bool>(
       valueListenable: isDarkModeNotifier,
       builder: (context, isDarkMode, child) {
-        return Scaffold(
-          backgroundColor:
-              isDarkMode ? fitColors["darkBackground"] : Colors.white,
-          extendBodyBehindAppBar: true,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            iconTheme: const IconThemeData(color: Colors.white),
-          ),
-          drawer: Drawer(
-            width: media.width,
-            backgroundColor: Colors.transparent,
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5),
-              child: Stack(
-                children: [
-                  Container(
-                    width: media.width * 0.78,
-                    decoration: BoxDecoration(
-                      color:
-                          isDarkMode
-                              ? fitColors["darkBackground"]
-                              : TColor.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: fitColors["dark"]!.withOpacity(0.1),
-                          blurRadius: 15,
-                          offset: const Offset(5, 0),
-                        ),
-                      ],
-                    ),
-                    child: SafeArea(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 25),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: kTextTabBarHeight,
-                              child: Row(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(22.5),
-                                      border: Border.all(
-                                        color: fitColors["secondary"]!,
-                                        width: 2,
-                                      ),
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(22.5),
-                                      child: Image.asset(
-                                        "assets/img/u1.png",
-                                        width: 45,
-                                        height: 45,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 20),
-                                  Expanded(
-                                    child: Text(
-                                      "Menu",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        color: fitColors["primary"],
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 15),
-                            Divider(color: fitColors["light"], height: 1),
-                            Expanded(
-                              child: ListView.builder(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 20,
-                                ),
-                                itemCount: planArr.length,
-                                itemBuilder: (context, index) {
-                                  var itemObj = planArr[index] as Map? ?? {};
-                                  return Padding(
-                                    padding: const EdgeInsets.only(bottom: 10),
-                                    child: PlanRow(
-                                      mObj: itemObj,
-                                      onPressed: () {
-                                        HapticFeedback.lightImpact();
-                                        Navigator.pop(context);
-
-                                        switch (itemObj["name"]) {
-                                          case "Settings":
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder:
-                                                    (context) =>
-                                                        _buildSettingsView(),
-                                              ),
-                                            );
-                                            break;
-                                          case "Terms and Conditions":
-                                            _showTermsAndConditions();
-                                            break;
-                                          case "Support":
-                                            ScaffoldMessenger.of(
-                                              context,
-                                            ).showSnackBar(
-                                              SnackBar(
-                                                backgroundColor:
-                                                    fitColors["primary"],
-                                                content: const Text(
-                                                  'Contact us at: abuelhassan179@gmail.com',
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                                duration: const Duration(
-                                                  seconds: 5,
-                                                ),
-                                                action: SnackBarAction(
-                                                  label: 'OK',
-                                                  textColor: Colors.white,
-                                                  onPressed: () {},
-                                                ),
-                                              ),
-                                            );
-                                            break;
-                                        }
-                                      },
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+        return WillPopScope(
+          onWillPop: () async {
+            bool shouldExit = false;
+            await showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) {
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  Column(
+                  backgroundColor:
+                      isDarkMode ? fitColors["darkBackground"] : Colors.white,
+                  title: const Text(
+                    "Exit App",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      const SizedBox(height: kToolbarHeight - 25),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 15),
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: Image.asset(
-                                "assets/img/meun_close.png",
-                                width: 25,
-                                height: 25,
-                              ),
-                            ),
+                      const Text("Are you sure you want to exit?"),
+                      const SizedBox(height: 16),
+                      Container(
+                        width: double.infinity,
+                        height: 60,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color:
+                              isDarkMode
+                                  ? fitColors["darkBackground"]
+                                  : Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: fitColors["secondary"]!,
+                            width: 1,
                           ),
-                        ],
+                        ),
+                        child:
+                            _adService.isBannerAdLoaded
+                                ? SizedBox(
+                                    width: _adService.bannerWidth,
+                                    height: _adService.bannerHeight,
+                                    child: _adService.getBannerAd(),
+                                  )
+                                : const SizedBox.shrink(),
                       ),
                     ],
                   ),
-                ],
-              ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        shouldExit = false;
+                      },
+                      child: const Text("Stay"),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        shouldExit = true;
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text("Exit"),
+                    ),
+                  ],
+                );
+              },
+            );
+            return shouldExit;
+          },
+          child: Scaffold(
+            backgroundColor:
+                isDarkMode ? fitColors["darkBackground"] : Colors.white,
+            extendBodyBehindAppBar: true,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              iconTheme: const IconThemeData(color: Colors.white),
             ),
-          ),
-          body: Column(
-            children: [
-              SizedBox(
-                height: media.width * 0.6,
+            drawer: Drawer(
+              width: media.width,
+              backgroundColor: Colors.transparent,
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5),
                 child: Stack(
                   children: [
-                    PageView.builder(
-                      controller: _pageController,
-                      itemCount: carouselItems.length,
-                      onPageChanged: (int page) {
-                        setState(() {
-                          _currentPage = page;
-                        });
-                      },
-                      itemBuilder: (context, index) {
-                        return _buildCarouselItem(index, context);
-                      },
-                    ),
-                    Positioned(
-                      bottom: 30,
-                      left: 0,
-                      right: 0,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 25,
-                          vertical: 10,
+                    Container(
+                      width: media.width * 0.78,
+                      decoration: BoxDecoration(
+                        color:
+                            isDarkMode
+                                ? fitColors["darkBackground"]
+                                : TColor.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: fitColors["dark"]!.withOpacity(0.1),
+                            blurRadius: 15,
+                            offset: const Offset(5, 0),
+                          ),
+                        ],
+                      ),
+                      child: SafeArea(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 25),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: kTextTabBarHeight,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                          22.5,
+                                        ),
+                                        border: Border.all(
+                                          color: fitColors["secondary"]!,
+                                          width: 2,
+                                        ),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                          22.5,
+                                        ),
+                                        child: Image.asset(
+                                          "assets/img/u1.png",
+                                          width: 45,
+                                          height: 45,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 20),
+                                    Expanded(
+                                      child: Text(
+                                        "Menu",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: fitColors["primary"],
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 15),
+                              Divider(color: fitColors["light"], height: 1),
+                              Expanded(
+                                child: ListView.builder(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 20,
+                                  ),
+                                  itemCount: planArr.length,
+                                  itemBuilder: (context, index) {
+                                    var itemObj = planArr[index] as Map? ?? {};
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                        bottom: 10,
+                                      ),
+                                      child: PlanRow(
+                                        mObj: itemObj,
+                                        onPressed: () {
+                                          HapticFeedback.lightImpact();
+                                          Navigator.pop(context);
+
+                                          switch (itemObj["name"]) {
+                                            case "Settings":
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder:
+                                                      (context) =>
+                                                          _buildSettingsView(),
+                                                ),
+                                              );
+                                              break;
+                                            case "Terms and Conditions":
+                                              _showTermsAndConditions();
+                                              break;
+                                            case "Support":
+                                              ScaffoldMessenger.of(
+                                                context,
+                                              ).showSnackBar(
+                                                SnackBar(
+                                                  backgroundColor:
+                                                      fitColors["primary"],
+                                                  content: const Text(
+                                                    'Contact us at: abuelhassan179@gmail.com',
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                  duration: const Duration(
+                                                    seconds: 5,
+                                                  ),
+                                                  action: SnackBarAction(
+                                                    label: 'OK',
+                                                    textColor: Colors.white,
+                                                    onPressed: () {},
+                                                  ),
+                                                ),
+                                              );
+                                              break;
+                                          }
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        child: Row(
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        const SizedBox(height: kToolbarHeight - 25),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.15,
-                              height: 54,
-                              decoration: BoxDecoration(
-                                color: TColor.white,
-                                borderRadius: BorderRadius.circular(27),
-                                border: Border.all(
-                                  color: fitColors["secondary"]!,
-                                  width: 2,
+                            Padding(
+                              padding: const EdgeInsets.only(right: 15),
+                              child: IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: Image.asset(
+                                  "assets/img/meun_close.png",
+                                  width: 25,
+                                  height: 25,
                                 ),
-                              ),
-                              alignment: Alignment.center,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(25),
-                                child: Image.asset(
-                                  "assets/img/u1.png",
-                                  width: 50,
-                                  height: 50,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 15),
-                            Flexible(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    "Welcome",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: TColor.white,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    "Let's get fit!",
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: TColor.white,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
                               ),
                             ),
                           ],
                         ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 5,
-                      left: 0,
-                      right: 0,
-                      child: _buildIndicator(),
+                      ],
                     ),
                   ],
                 ),
               ),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color:
-                        isDarkMode ? fitColors["darkBackground"] : Colors.white,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 10,
-                        offset: const Offset(0, -5),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+            body: Column(
+              children: [
+                SizedBox(
+                  height: media.width * 0.6,
+                  child: Stack(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 25, 20, 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Fitness Menu",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color:
-                                    isDarkMode
-                                        ? Colors.white
-                                        : fitColors["dark"],
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 6,
-                              ),
-                              decoration: BoxDecoration(
-                                color: fitColors["secondary"]!.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Text(
-                                "View All",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: fitColors["secondary"],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                      PageView.builder(
+                        controller: _pageController,
+                        itemCount: carouselItems.length,
+                        onPageChanged: (int page) {
+                          setState(() {
+                            _currentPage = page;
+                          });
+                        },
+                        itemBuilder: (context, index) {
+                          return _buildCarouselItem(index, context);
+                        },
                       ),
-                      Expanded(
-                        child: AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 300),
-                          child: GridView.builder(
-                            key: const ValueKey('menu_grid'),
-                            padding: const EdgeInsets.fromLTRB(15, 5, 15, 20),
-                            physics: const BouncingScrollPhysics(),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 15,
-                                  mainAxisSpacing: 15,
-                                  childAspectRatio: 0.9,
+                      Positioned(
+                        bottom: 30,
+                        left: 0,
+                        right: 0,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 25,
+                            vertical: 10,
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.15,
+                                height: 54,
+                                decoration: BoxDecoration(
+                                  color: TColor.white,
+                                  borderRadius: BorderRadius.circular(27),
+                                  border: Border.all(
+                                    color: fitColors["secondary"]!,
+                                    width: 2,
+                                  ),
                                 ),
-                            itemCount: menuArr.length,
-                            itemBuilder: ((context, index) {
-                              var mObj = menuArr[index] as Map? ?? {};
-                              return _buildMenuItem(mObj, index);
-                            }),
+                                alignment: Alignment.center,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(25),
+                                  child: Image.asset(
+                                    "assets/img/u1.png",
+                                    width: 50,
+                                    height: 50,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 15),
+                              Flexible(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      "Welcome",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: TColor.white,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      "Let's get fit!",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        color: TColor.white,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                      // Only show banner when ad is loaded
-                      if (_adService.isBannerAdLoaded) _buildBannerAd(),
+                      Positioned(
+                        bottom: 5,
+                        left: 0,
+                        right: 0,
+                        child: _buildIndicator(),
+                      ),
                     ],
                   ),
                 ),
-              ),
-              SizedBox(height: 35),
-            ],
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color:
+                          isDarkMode
+                              ? fitColors["darkBackground"]
+                              : Colors.white,
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 10,
+                          offset: const Offset(0, -5),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 25, 20, 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Fitness Menu",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color:
+                                      isDarkMode
+                                          ? Colors.white
+                                          : fitColors["dark"],
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 6,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: fitColors["secondary"]!.withOpacity(
+                                    0.1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Text(
+                                  "View All",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: fitColors["secondary"],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 300),
+                            child: GridView.builder(
+                              key: const ValueKey('menu_grid'),
+                              padding: const EdgeInsets.fromLTRB(15, 5, 15, 20),
+                              physics: const BouncingScrollPhysics(),
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 15,
+                                    mainAxisSpacing: 15,
+                                    childAspectRatio: 0.9,
+                                  ),
+                              itemCount: menuArr.length,
+                              itemBuilder: ((context, index) {
+                                var mObj = menuArr[index] as Map? ?? {};
+                                return _buildMenuItem(mObj, index);
+                              }),
+                            ),
+                          ),
+                        ),
+                        // Only show banner when ad is loaded
+                        if (_adService.isBannerAdLoaded) _buildBannerAd(),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 35),
+              ],
+            ),
           ),
         );
       },
