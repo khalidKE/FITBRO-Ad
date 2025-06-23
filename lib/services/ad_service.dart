@@ -121,6 +121,21 @@ Counter: $_interstitialAdCounter
     );
   }
 
+  // Dispose only the banner ad
+  Future<void> disposeBannerAd() async {
+    if (_bannerAd != null) {
+      await _bannerAd!.dispose();
+      _bannerAd = null;
+      _isBannerAdLoaded = false;
+      notifyListeners();
+    }
+  }
+
+  // Public method to initialize (load) the banner ad
+  Future<void> initializeBannerAd() async {
+    await _loadBannerAd();
+  }
+
   // Interstitial Ad Methods
   Future<void> _loadInterstitialAd() async {
     try {

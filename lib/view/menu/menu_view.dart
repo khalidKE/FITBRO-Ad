@@ -126,6 +126,9 @@ class _MenuViewState extends State<MenuView>
     },
   ];
 
+  BannerAd? _exitDialogBannerAd;
+  bool _isExitDialogBannerLoaded = false;
+
   @override
   void initState() {
     super.initState();
@@ -162,7 +165,36 @@ class _MenuViewState extends State<MenuView>
     _animationController.dispose();
     _pageController.dispose();
     _adService.dispose();
+    _disposeExitDialogBannerAd();
     super.dispose();
+  }
+
+  void _disposeExitDialogBannerAd() {
+    _exitDialogBannerAd?.dispose();
+    _exitDialogBannerAd = null;
+    _isExitDialogBannerLoaded = false;
+  }
+
+  void _loadExitDialogBannerAd() {
+    _disposeExitDialogBannerAd();
+    _exitDialogBannerAd = BannerAd(
+      adUnitId: AdMobConfig.bannerAdUnitId,
+      size: AdSize.banner,
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            _isExitDialogBannerLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          setState(() {
+            _isExitDialogBannerLoaded = false;
+          });
+        },
+      ),
+    )..load();
   }
 
   Future<void> _initializeNotifications() async {
@@ -1169,71 +1201,72 @@ class _MenuViewState extends State<MenuView>
       builder: (context, isDarkMode, child) {
         return WillPopScope(
           onWillPop: () async {
+            // Dispose main menu banner ad and load dialog ad
+            _adService.disposeBannerAd();
+            _loadExitDialogBannerAd();
             bool shouldExit = false;
             await showDialog(
               context: context,
               barrierDismissible: false,
               builder: (context) {
-                return AlertDialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  backgroundColor:
-                      isDarkMode ? fitColors["darkBackground"] : Colors.white,
-                  title: const Text(
-                    "Exit App",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text("Are you sure you want to exit?"),
-                      const SizedBox(height: 16),
-                      Container(
-                        width: double.infinity,
-                        height: 60,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color:
-                              isDarkMode
-                                  ? fitColors["darkBackground"]
-                                  : Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: fitColors["secondary"]!,
-                            width: 1,
-                          ),
-                        ),
-                        child:
-                            _adService.isBannerAdLoaded
-                                ? SizedBox(
-                                    width: _adService.bannerWidth,
-                                    height: _adService.bannerHeight,
-                                    child: _adService.getBannerAd(),
-                                  )
-                                : const SizedBox.shrink(),
+                return StatefulBuilder(
+                  builder: (context, setStateDialog) {
+                    return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                    ],
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        shouldExit = false;
-                      },
-                      child: const Text("Stay"),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        shouldExit = true;
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text("Exit"),
-                    ),
-                  ],
+                      backgroundColor:
+                          isDarkMode ? fitColors["darkBackground"] : Colors.white,
+                      title: const Text(
+                        "Exit App",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text("Are you sure you want to exit?"),
+                          const SizedBox(height: 16),
+                          if (_isExitDialogBannerLoaded && _exitDialogBannerAd != null)
+                            Container(
+                              width: _exitDialogBannerAd!.size.width.toDouble(),
+                              height: _exitDialogBannerAd!.size.height.toDouble(),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: isDarkMode ? fitColors["darkBackground"] : Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: fitColors["secondary"]!,
+                                  width: 1,
+                                ),
+                              ),
+                              child: AdWidget(ad: _exitDialogBannerAd!),
+                            ),
+                        ],
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            shouldExit = false;
+                          },
+                          child: const Text("Stay"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            shouldExit = true;
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Exit"),
+                        ),
+                      ],
+                    );
+                  },
                 );
               },
             );
+            // Dispose dialog ad and reload main menu ad
+            _disposeExitDialogBannerAd();
+            _adService.initializeBannerAd();
             return shouldExit;
           },
           child: Scaffold(
