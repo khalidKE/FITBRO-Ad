@@ -24,6 +24,10 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
   RewardedAd? _rewardedAd;
   bool _isRewardedAdLoaded = false;
 
+  // Banner ad for this screen
+  BannerAd? _bannerAd;
+  bool _isBannerAdLoaded = false;
+
   // Define colors for consistency
   final Map<String, Color> fitColors = {
     "primary": const Color(0xFF1E5128),
@@ -41,6 +45,27 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
     super.initState();
     startTime = DateTime.now();
     _loadRewardedAd();
+
+    // Load banner ad
+    _bannerAd = BannerAd(
+      adUnitId: 'ca-app-pub-8639311525630636/6699798389',
+      size: AdSize.banner,
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          setState(() {
+            _isBannerAdLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          setState(() {
+            _isBannerAdLoaded = false;
+          });
+        },
+      ),
+    );
+    _bannerAd?.load();
   }
 
   @override
@@ -52,6 +77,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
   @override
   void dispose() {
     _rewardedAd?.dispose();
+    _bannerAd?.dispose();
     super.dispose();
   }
 
@@ -249,6 +275,15 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
                 ),
               ),
             ),
+            bottomNavigationBar: _isBannerAdLoaded && _bannerAd != null
+                ? Container(
+                    color: Colors.transparent,
+                    alignment: Alignment.center,
+                    width: _bannerAd!.size.width.toDouble(),
+                    height: _bannerAd!.size.height.toDouble(),
+                    child: AdWidget(ad: _bannerAd!),
+                  )
+                : null,
           );
         }
 
@@ -408,6 +443,15 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
               ],
             ),
           ),
+          bottomNavigationBar: _isBannerAdLoaded && _bannerAd != null
+              ? Container(
+                  color: Colors.transparent,
+                  alignment: Alignment.center,
+                  width: _bannerAd!.size.width.toDouble(),
+                  height: _bannerAd!.size.height.toDouble(),
+                  child: AdWidget(ad: _bannerAd!),
+                )
+              : null,
         );
       },
     );

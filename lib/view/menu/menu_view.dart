@@ -128,6 +128,7 @@ class _MenuViewState extends State<MenuView>
 
   BannerAd? _exitDialogBannerAd;
   bool _isExitDialogBannerLoaded = false;
+  bool _isExitDialogOpen = false;
 
   @override
   void initState() {
@@ -1201,6 +1202,7 @@ class _MenuViewState extends State<MenuView>
       builder: (context, isDarkMode, child) {
         return WillPopScope(
           onWillPop: () async {
+            _isExitDialogOpen = true;
             // Dispose main menu banner ad and load dialog ad
             _adService.disposeBannerAd();
             _loadExitDialogBannerAd();
@@ -1267,6 +1269,7 @@ class _MenuViewState extends State<MenuView>
             // Dispose dialog ad and reload main menu ad
             _disposeExitDialogBannerAd();
             _adService.initializeBannerAd();
+            _isExitDialogOpen = false;
             return shouldExit;
           },
           child: Scaffold(
@@ -1621,7 +1624,7 @@ class _MenuViewState extends State<MenuView>
                           ),
                         ),
                         // Only show banner when ad is loaded
-                        if (_adService.isBannerAdLoaded) _buildBannerAd(),
+                        if (_adService.isBannerAdLoaded && !_isExitDialogOpen) _buildBannerAd(),
                       ],
                     ),
                   ),
