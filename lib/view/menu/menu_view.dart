@@ -1174,16 +1174,10 @@ class _MenuViewState extends State<MenuView>
   }
 
   void _navigateToScreen(Widget screen) {
-    if (_adService.isRewardedInterstitialAdLoaded) {
-      _adService.showRewardedInterstitialAd(onRewarded: (reward) {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
-      });
-    } else {
-      if (!_adService.isAnyAdShowing) {
-        _adService.showInterstitialAd();
-      }
-      Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
+    if (!_adService.isAnyAdShowing) {
+      _adService.showInterstitialAd();
     }
+    Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
   }
 
   void _handleMenuItemTap(String tag) {

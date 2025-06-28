@@ -9,6 +9,7 @@ import 'package:FitBro/models/blocs/cubit/workoutcubit.dart';
 import 'package:FitBro/models/data/data.dart';
 import 'package:FitBro/screens/exercising.dart';
 import 'package:FitBro/view/exercise/exercise_view_2.dart';
+import 'package:FitBro/services/ad_service.dart';
 
 class WorkoutPicker extends StatelessWidget {
   const WorkoutPicker({super.key});
@@ -44,6 +45,9 @@ class WorkoutPicker extends StatelessWidget {
       "background": const Color(0xFFF5F5F5),
       "darkBackground": const Color(0xFF2A2A2A),
     };
+
+    final AdService _adService = AdService();
+    _adService.loadRewardedInterstitialAd();
 
     return BlocBuilder<ExerciseCubit, ExerciseState>(
       builder: (context, state) {
@@ -87,12 +91,24 @@ class WorkoutPicker extends StatelessWidget {
                       ],
                     ),
                     floatingActionButton: FloatingActionButton.extended(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const WorkoutSessionScreen(),
-                          ),
-                        );
+                      onPressed: () async {
+                        if (_adService.isRewardedInterstitialAdLoaded) {
+                          _adService.showRewardedInterstitialAd(onRewarded: (reward) {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const WorkoutSessionScreen(),
+                              ),
+                            );
+                            _adService.loadRewardedInterstitialAd();
+                          });
+                        } else {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const WorkoutSessionScreen(),
+                            ),
+                          );
+                          _adService.loadRewardedInterstitialAd();
+                        }
                       },
                       backgroundColor: TColor.primary,
                       icon: const Icon(FontAwesomeIcons.play),

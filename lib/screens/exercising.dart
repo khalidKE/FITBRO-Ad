@@ -134,7 +134,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
 
     context.read<ExerciseCubit>().workout.clear();
 
-    // Show congratulatory dialog with option to watch ad
+    // Show congratulatory dialog (no rewarded ad button)
     await showDialog(
       context: context,
       builder:
@@ -163,19 +163,6 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    if (_adService.isRewardedInterstitialAdLoaded)
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          _showRewardedInterstitialAd();
-                        },
-                        icon: const Icon(Icons.card_giftcard),
-                        label: const Text("Watch Ad for Reward"),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: fitColors["secondary"],
-                          foregroundColor: Colors.white,
-                        ),
-                      ),
                   ],
                 ),
                 actions: [
@@ -195,9 +182,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
           ),
     );
 
-    if (!_adService.isRewardedInterstitialAdLoaded) {
-      _navigateToMenu();
-    }
+    _navigateToMenu();
   }
 
   void _navigateToMenu() {
