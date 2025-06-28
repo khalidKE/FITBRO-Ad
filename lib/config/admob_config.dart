@@ -6,9 +6,10 @@ class AdMobConfig {
 
   // Production Ad Unit IDs
   static const String bannerAdUnitId = 'ca-app-pub-8639311525630636/6699798389';
-  static const String interstitialAdUnitId = 'ca-app-pub-8639311525630636/7745286740';  // Replace with your actual interstitial ad unit
-  static const String rewardedAdUnitId = 'ca-app-pub-8639311525630636/7745286740';  // Replace with your actual rewarded ad unit
+  static const String interstitialAdUnitId = 'ca-app-pub-8639311525630636/7745286740';
+  static const String rewardedInterstitialAdUnitId = 'ca-app-pub-8639311525630636/4073408071';
   static const String appOpenAdUnitId = 'ca-app-pub-8639311525630636/2424199342';
+  static const String nativeAdUnitId = 'ca-app-pub-8639311525630636/5498170382';
 
   // Test Ad Unit IDs
   static const String testBannerAdUnitId = 'ca-app-pub-3940256099942544/6300978111';
@@ -45,6 +46,8 @@ class AdMobConfig {
           return testRewardedAdUnitId;
         case 'appOpen':
           return testAppOpenAdUnitId;
+        case 'native':
+          return testBannerAdUnitId;
         default:
           throw Exception('Invalid ad type: $adType');
       }
@@ -54,8 +57,10 @@ class AdMobConfig {
           return bannerAdUnitId;
         case 'interstitial':
           return interstitialAdUnitId;
-        case 'rewarded':
-          return rewardedAdUnitId;
+        case 'rewardedInterstitial':
+          return rewardedInterstitialAdUnitId;
+        case 'native':
+          return nativeAdUnitId;
         case 'appOpen':
           return appOpenAdUnitId;
         default:

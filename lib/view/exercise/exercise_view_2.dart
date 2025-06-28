@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:FitBro/models/blocs/cubit/workoutcubit.dart';
 import 'package:FitBro/view/workout/workout_detail_view.dart';
 import '../../common/color_extension.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class ExerciseView2 extends StatefulWidget {
   const ExerciseView2({super.key});
@@ -44,6 +45,39 @@ class _ExerciseView2State extends State<ExerciseView2> {
     "darkBackground": const Color(0xFF2A2A2A),
     "white": Colors.white,
   };
+
+  BannerAd? _bannerAd;
+  bool _isBannerAdLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _bannerAd = BannerAd(
+      adUnitId: 'ca-app-pub-8639311525630636/6699798389',
+      size: AdSize.banner,
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          setState(() {
+            _isBannerAdLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          setState(() {
+            _isBannerAdLoaded = false;
+          });
+        },
+      ),
+    );
+    _bannerAd?.load();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,6 +161,14 @@ class _ExerciseView2State extends State<ExerciseView2> {
                       ),
                     ),
               ),
+              bottomNavigationBar: _isBannerAdLoaded && _bannerAd != null
+                  ? Container(
+                      width: _bannerAd!.size.width.toDouble(),
+                      height: _bannerAd!.size.height.toDouble(),
+                      alignment: Alignment.center,
+                      child: AdWidget(ad: _bannerAd!),
+                    )
+                  : null,
             );
           },
         );

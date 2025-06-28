@@ -130,6 +130,9 @@ class _MenuViewState extends State<MenuView>
   bool _isExitDialogBannerLoaded = false;
   bool _isExitDialogOpen = false;
 
+  NativeAd? _exitDialogNativeAd;
+  bool _isExitDialogNativeAdLoaded = false;
+
   @override
   void initState() {
     super.initState();
@@ -167,6 +170,7 @@ class _MenuViewState extends State<MenuView>
     _pageController.dispose();
     _adService.dispose();
     _disposeExitDialogBannerAd();
+    _disposeExitDialogNativeAd();
     super.dispose();
   }
 
@@ -174,6 +178,12 @@ class _MenuViewState extends State<MenuView>
     _exitDialogBannerAd?.dispose();
     _exitDialogBannerAd = null;
     _isExitDialogBannerLoaded = false;
+  }
+
+  void _disposeExitDialogNativeAd() {
+    _exitDialogNativeAd?.dispose();
+    _exitDialogNativeAd = null;
+    _isExitDialogNativeAdLoaded = false;
   }
 
   void _loadExitDialogBannerAd() {
@@ -192,6 +202,28 @@ class _MenuViewState extends State<MenuView>
           ad.dispose();
           setState(() {
             _isExitDialogBannerLoaded = false;
+          });
+        },
+      ),
+    )..load();
+  }
+
+  void _loadExitDialogNativeAd() {
+    _disposeExitDialogNativeAd();
+    _exitDialogNativeAd = NativeAd(
+      adUnitId: 'ca-app-pub-8639311525630636/5498170382',
+      factoryId: 'listTile',
+      request: const AdRequest(),
+      listener: NativeAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            _isExitDialogNativeAdLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          setState(() {
+            _isExitDialogNativeAdLoaded = false;
           });
         },
       ),
@@ -1142,10 +1174,16 @@ class _MenuViewState extends State<MenuView>
   }
 
   void _navigateToScreen(Widget screen) {
-    if (!_adService.isAnyAdShowing) {
-      _adService.showInterstitialAd();
+    if (_adService.isRewardedInterstitialAdLoaded) {
+      _adService.showRewardedInterstitialAd(onRewarded: (reward) {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
+      });
+    } else {
+      if (!_adService.isAnyAdShowing) {
+        _adService.showInterstitialAd();
+      }
+      Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
     }
-    Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
   }
 
   void _handleMenuItemTap(String tag) {
@@ -1203,6 +1241,7 @@ class _MenuViewState extends State<MenuView>
         return WillPopScope(
           onWillPop: () async {
             _isExitDialogOpen = true;
+            _loadExitDialogNativeAd();
             // Dispose main menu banner ad and load dialog ad
             _adService.disposeBannerAd();
             _loadExitDialogBannerAd();
@@ -1228,7 +1267,14 @@ class _MenuViewState extends State<MenuView>
                         children: [
                           const Text("Are you sure you want to exit?"),
                           const SizedBox(height: 16),
-                          if (_isExitDialogBannerLoaded && _exitDialogBannerAd != null)
+                          if (_isExitDialogNativeAdLoaded && _exitDialogNativeAd != null)
+                            Container(
+                              width: double.infinity,
+                              height: 120,
+                              alignment: Alignment.center,
+                              child: AdWidget(ad: _exitDialogNativeAd!),
+                            )
+                          else if (_isExitDialogBannerLoaded && _exitDialogBannerAd != null)
                             Container(
                               width: _exitDialogBannerAd!.size.width.toDouble(),
                               height: _exitDialogBannerAd!.size.height.toDouble(),
@@ -1267,6 +1313,7 @@ class _MenuViewState extends State<MenuView>
               },
             );
             // Dispose dialog ad and reload main menu ad
+            _disposeExitDialogNativeAd();
             _disposeExitDialogBannerAd();
             _adService.initializeBannerAd();
             _isExitDialogOpen = false;

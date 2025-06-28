@@ -30,6 +30,11 @@ class AdService extends ChangeNotifier {
   bool _isRewardedAdLoaded = false;
   bool get isRewardedAdLoaded => _isRewardedAdLoaded;
 
+  // Rewarded Interstitial Ad
+  RewardedInterstitialAd? _rewardedInterstitialAd;
+  bool _isRewardedInterstitialAdLoaded = false;
+  bool get isRewardedInterstitialAdLoaded => _isRewardedInterstitialAdLoaded;
+
   // Add method to check if any ad is currently showing
   bool _isShowingAd = false;
 
@@ -41,6 +46,7 @@ AdService Status:
 Banner Ad: ${_isBannerAdLoaded ? 'Loaded' : 'Not Loaded'} (${_bannerAd != null ? 'Instance exists' : 'No instance'})
 Interstitial Ad: ${_isInterstitialAdLoaded ? 'Loaded' : 'Not Loaded'} (${_interstitialAd != null ? 'Instance exists' : 'No instance'})
 Rewarded Ad: ${_isRewardedAdLoaded ? 'Loaded' : 'Not Loaded'} (${_rewardedAd != null ? 'Instance exists' : 'No instance'})
+Rewarded Interstitial Ad: ${_isRewardedInterstitialAdLoaded ? 'Loaded' : 'Not Loaded'} (${_rewardedInterstitialAd != null ? 'Instance exists' : 'No instance'})
 Counter: $_interstitialAdCounter
 ----------------
 ''');
@@ -337,6 +343,100 @@ Counter: $_interstitialAdCounter
     }
   }
 
+  // Rewarded Interstitial Ad Methods
+  Future<void> loadRewardedInterstitialAd() async {
+    try {
+      final adUnitId = 'ca-app-pub-8639311525630636/4073408071';
+      debugPrint('AdService: Loading RewardedInterstitialAd with ID: $adUnitId');
+      if (_rewardedInterstitialAd != null) {
+        await _rewardedInterstitialAd!.dispose();
+        _rewardedInterstitialAd = null;
+        _isRewardedInterstitialAdLoaded = false;
+      }
+      await RewardedInterstitialAd.load(
+        adUnitId: adUnitId,
+        request: const AdRequest(),
+        rewardedInterstitialAdLoadCallback: RewardedInterstitialAdLoadCallback(
+          onAdLoaded: (ad) {
+            debugPrint('AdService: RewardedInterstitialAd loaded');
+            _rewardedInterstitialAd = ad;
+            _isRewardedInterstitialAdLoaded = true;
+            notifyListeners();
+            _rewardedInterstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+              onAdDismissedFullScreenContent: (ad) {
+                debugPrint('AdService: RewardedInterstitialAd dismissed');
+                _isRewardedInterstitialAdLoaded = false;
+                ad.dispose();
+                _rewardedInterstitialAd = null;
+                notifyListeners();
+                loadRewardedInterstitialAd();
+              },
+              onAdFailedToShowFullScreenContent: (ad, error) {
+                debugPrint('AdService: RewardedInterstitialAd failed to show: ${error.message}');
+                _isRewardedInterstitialAdLoaded = false;
+                ad.dispose();
+                _rewardedInterstitialAd = null;
+                notifyListeners();
+                loadRewardedInterstitialAd();
+              },
+              onAdShowedFullScreenContent: (ad) {
+                debugPrint('AdService: RewardedInterstitialAd showed');
+                notifyListeners();
+              },
+            );
+          },
+          onAdFailedToLoad: (error) {
+            debugPrint('AdService: RewardedInterstitialAd failed to load: ${error.message}');
+            _isRewardedInterstitialAdLoaded = false;
+            _rewardedInterstitialAd = null;
+            notifyListeners();
+            // Retry after 30 seconds
+            Future.delayed(const Duration(seconds: 30), () {
+              if (!_isRewardedInterstitialAdLoaded) {
+                loadRewardedInterstitialAd();
+              }
+            });
+          },
+        ),
+      );
+    } catch (e) {
+      debugPrint('AdService: Error loading RewardedInterstitialAd: $e');
+      _isRewardedInterstitialAdLoaded = false;
+      _rewardedInterstitialAd = null;
+      notifyListeners();
+    }
+  }
+
+  void showRewardedInterstitialAd({required Function(RewardItem) onRewarded}) {
+    if (!_isRewardedInterstitialAdLoaded || _rewardedInterstitialAd == null) {
+      debugPrint('AdService: RewardedInterstitialAd not ready to show');
+      return;
+    }
+    try {
+      debugPrint('AdService: Showing RewardedInterstitialAd');
+      _rewardedInterstitialAd!.show(
+        onUserEarnedReward: (_, reward) {
+          debugPrint('AdService: User earned reward from RewardedInterstitialAd: ${reward.amount} ${reward.type}');
+          onRewarded(reward);
+        },
+      );
+    } catch (e) {
+      debugPrint('AdService: Error showing RewardedInterstitialAd: $e');
+      _isRewardedInterstitialAdLoaded = false;
+      _rewardedInterstitialAd = null;
+      notifyListeners();
+    }
+  }
+
+  Future<void> disposeRewardedInterstitialAd() async {
+    if (_rewardedInterstitialAd != null) {
+      await _rewardedInterstitialAd!.dispose();
+      _rewardedInterstitialAd = null;
+      _isRewardedInterstitialAdLoaded = false;
+      notifyListeners();
+    }
+  }
+
   // Dispose ads
   Future<void> dispose() async {
     debugPrint('AdService: Disposing ads');
@@ -353,9 +453,14 @@ Counter: $_interstitialAdCounter
         await _rewardedAd!.dispose();
         _rewardedAd = null;
       }
+      if (_rewardedInterstitialAd != null) {
+        await _rewardedInterstitialAd!.dispose();
+        _rewardedInterstitialAd = null;
+      }
       _isBannerAdLoaded = false;
       _isInterstitialAdLoaded = false;
       _isRewardedAdLoaded = false;
+      _isRewardedInterstitialAdLoaded = false;
     } catch (e) {
       debugPrint('AdService: Error disposing ads: $e');
     }
@@ -389,6 +494,7 @@ Counter: $_interstitialAdCounter
         debugPrint('AdService: Loading interstitial and rewarded ads...');
         _loadInterstitialAd();
         _loadRewardedAd();
+        loadRewardedInterstitialAd();
       });
       
       _logAdStatus();

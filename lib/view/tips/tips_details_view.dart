@@ -3,6 +3,7 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:google_mobile_ads/google_mobile_ads.dart"; // Add this import
 import "../../common/color_extension.dart";
+import '../../services/ad_service.dart';
 
 class TipsDetailView extends StatefulWidget {
   final Map<String, dynamic> tObj;
@@ -28,15 +29,18 @@ class _TipsDetailViewState extends State<TipsDetailView> {
   // Add banner ad
   BannerAd? _bannerAd;
   bool _isBannerAdLoaded = false;
+  final AdService _adService = AdService();
   @override
   void initState() {
     super.initState();
     _loadBannerAd();
+    _adService.loadRewardedInterstitialAd();
   }
 
   @override
   void dispose() {
     _bannerAd?.dispose();
+    _adService.disposeRewardedInterstitialAd();
     super.dispose();
   }
 
@@ -151,6 +155,14 @@ class _TipsDetailViewState extends State<TipsDetailView> {
               ), // Add space below the ad to avoid navigation buttons
             ],
           ),
+          bottomNavigationBar: _isBannerAdLoaded
+              ? Container(
+                  width: _bannerAd!.size.width.toDouble(),
+                  height: _bannerAd!.size.height.toDouble(),
+                  alignment: Alignment.center,
+                  child: AdWidget(ad: _bannerAd!),
+                )
+              : const SizedBox.shrink(),
         );
       },
     );

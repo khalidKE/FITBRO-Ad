@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../common/color_extension.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class ExerciseHistoryScreen extends StatefulWidget {
   const ExerciseHistoryScreen({super.key});
@@ -28,11 +29,39 @@ class _ExerciseHistoryScreenState extends State<ExerciseHistoryScreen> {
     "darkBackground": const Color(0xFF2A2A2A),
   };
 
+  BannerAd? _bannerAd;
+  bool _isBannerAdLoaded = false;
+
   @override
   void initState() {
     super.initState();
     // Fetch exercise history when the screen is initialized
     context.read<SaveCubit>().getUserExcersiceInfo();
+    _bannerAd = BannerAd(
+      adUnitId: 'ca-app-pub-8639311525630636/6699798389',
+      size: AdSize.banner,
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          setState(() {
+            _isBannerAdLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          setState(() {
+            _isBannerAdLoaded = false;
+          });
+        },
+      ),
+    );
+    _bannerAd?.load();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd?.dispose();
+    super.dispose();
   }
 
   @override
@@ -236,17 +265,17 @@ class _ExerciseHistoryScreenState extends State<ExerciseHistoryScreen> {
                   ),
                 );
               }
-              return Center(
-                child: Text(
-                  "No exercise history available.",
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: isDarkMode ? Colors.white : Colors.black,
-                  ),
-                ),
-              );
+              return const SizedBox.shrink();
             },
           ),
+          bottomNavigationBar: _isBannerAdLoaded && _bannerAd != null
+              ? Container(
+                  width: _bannerAd!.size.width.toDouble(),
+                  height: _bannerAd!.size.height.toDouble(),
+                  alignment: Alignment.center,
+                  child: AdWidget(ad: _bannerAd!),
+                )
+              : null,
         );
       },
     );

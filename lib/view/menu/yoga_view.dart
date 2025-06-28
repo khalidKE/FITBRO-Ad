@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../common/color_extension.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class YogaView extends StatefulWidget {
   const YogaView({super.key});
@@ -23,6 +24,39 @@ class _YogaViewState extends State<YogaView> {
     "background": const Color(0xFFF5F5F5),
     "darkBackground": const Color(0xFF2A2A2A),
   };
+
+  BannerAd? _bannerAd;
+  bool _isBannerAdLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _bannerAd = BannerAd(
+      adUnitId: 'ca-app-pub-8639311525630636/6699798389',
+      size: AdSize.banner,
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          setState(() {
+            _isBannerAdLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          setState(() {
+            _isBannerAdLoaded = false;
+          });
+        },
+      ),
+    );
+    _bannerAd?.load();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,17 +152,17 @@ class _YogaViewState extends State<YogaView> {
                   ),
                   padding: const EdgeInsets.all(16),
                   child: Text(
-                    "Yoga is more than just a physical practice—it’s a journey of the mind, body, and breath. "
+                    "Yoga is more than just a physical practice—it's a journey of the mind, body, and breath. "
                     "By connecting movement with mindful breathing, yoga helps reduce stress, improve flexibility, and increase overall mental clarity.\n\n"
                     "Beginner Tips:\n"
-                    "- Start with basic poses like Child’s Pose, Downward Dog, and Mountain Pose.\n"
-                    "- Don’t worry about being perfect—listen to your body.\n"
-                    "- Focus on your breathing—it’s your guide.\n\n"
+                    "- Start with basic poses like Child's Pose, Downward Dog, and Mountain Pose.\n"
+                    "- Don't worry about being perfect—listen to your body.\n"
+                    "- Focus on your breathing—it's your guide.\n\n"
                     "Benefits:\n"
                     "- Enhances strength and flexibility\n"
                     "- Improves posture and balance\n"
                     "- Promotes better sleep and mental focus\n\n"
-                    "Yoga isn’t about touching your toes—it’s about what you learn on the way down. "
+                    "Yoga isn't about touching your toes—it's about what you learn on the way down. "
                     "Take your time, stay consistent, and enjoy every moment on the mat.",
                     style: GoogleFonts.roboto(
                       fontSize: 16,
@@ -144,6 +178,14 @@ class _YogaViewState extends State<YogaView> {
               ],
             ),
           ),
+          bottomNavigationBar: _isBannerAdLoaded && _bannerAd != null
+              ? Container(
+                  width: _bannerAd!.size.width.toDouble(),
+                  height: _bannerAd!.size.height.toDouble(),
+                  alignment: Alignment.center,
+                  child: AdWidget(ad: _bannerAd!),
+                )
+              : null,
         );
       },
     );

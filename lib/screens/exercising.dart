@@ -7,6 +7,7 @@ import 'package:FitBro/models/blocs/cubit/StoreCubit/srore_cubit.dart';
 import 'package:FitBro/models/blocs/cubit/workoutcubit.dart';
 import 'package:FitBro/models/data/data.dart';
 import 'package:FitBro/view/menu/menu_view.dart';
+import 'package:FitBro/services/ad_service.dart';
 
 class WorkoutSessionScreen extends StatefulWidget {
   const WorkoutSessionScreen({super.key});
@@ -20,9 +21,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
   late List<WorkoutData> workoutDataList;
   late DateTime startTime;
 
-  // Add reward ad
-  RewardedAd? _rewardedAd;
-  bool _isRewardedAdLoaded = false;
+  final AdService _adService = AdService();
 
   // Banner ad for this screen
   BannerAd? _bannerAd;
@@ -44,7 +43,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
   void initState() {
     super.initState();
     startTime = DateTime.now();
-    _loadRewardedAd();
+    _adService.loadRewardedInterstitialAd();
 
     // Load banner ad
     _bannerAd = BannerAd(
@@ -76,58 +75,27 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
 
   @override
   void dispose() {
-    _rewardedAd?.dispose();
     _bannerAd?.dispose();
+    _adService.disposeRewardedInterstitialAd();
     super.dispose();
   }
 
-  void _loadRewardedAd() {
-    RewardedAd.load(
-      adUnitId: 'ca-app-pub-8639311525630636/7745286740',
-      request: const AdRequest(),
-      rewardedAdLoadCallback: RewardedAdLoadCallback(
-        onAdLoaded: (ad) {
-          _rewardedAd = ad;
-          _isRewardedAdLoaded = true;
-
-          // Set callback for ad closing
-          _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
-            onAdDismissedFullScreenContent: (ad) {
-              _isRewardedAdLoaded = false;
-              ad.dispose();
-            },
-            onAdFailedToShowFullScreenContent: (ad, error) {
-              _isRewardedAdLoaded = false;
-              ad.dispose();
-            },
-          );
-        },
-        onAdFailedToLoad: (error) {
-          print('Rewarded ad failed to load: ${error.message}');
-          _isRewardedAdLoaded = false;
-        },
-      ),
-    );
-  }
-
-  void _showRewardedAd() {
-    if (_isRewardedAdLoaded && _rewardedAd != null) {
-      _rewardedAd!.show(
-        onUserEarnedReward: (_, reward) {
-          // Handle reward
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: fitColors["primary"],
-              content: Text(
-                'Congratulations! You earned a reward of ${reward.amount} ${reward.type}',
-                style: const TextStyle(color: Colors.white),
-              ),
+  void _showRewardedInterstitialAd() {
+    if (_adService.isRewardedInterstitialAdLoaded) {
+      _adService.showRewardedInterstitialAd(onRewarded: (reward) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: fitColors["primary"],
+            content: Text(
+              'Congratulations! You earned a reward of ${reward.amount} ${reward.type}',
+              style: const TextStyle(color: Colors.white),
             ),
-          );
-        },
-      );
+          ),
+        );
+        _navigateToMenu();
+      });
     } else {
-      _done(); // Continue with completion if ad not available
+      _navigateToMenu();
     }
   }
 
@@ -195,11 +163,11 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    if (_isRewardedAdLoaded)
+                    if (_adService.isRewardedInterstitialAdLoaded)
                       ElevatedButton.icon(
                         onPressed: () {
                           Navigator.of(context).pop();
-                          _showRewardedAd();
+                          _showRewardedInterstitialAd();
                         },
                         icon: const Icon(Icons.card_giftcard),
                         label: const Text("Watch Ad for Reward"),
@@ -227,7 +195,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
           ),
     );
 
-    if (!_isRewardedAdLoaded) {
+    if (!_adService.isRewardedInterstitialAdLoaded) {
       _navigateToMenu();
     }
   }

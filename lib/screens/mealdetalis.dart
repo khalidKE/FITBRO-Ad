@@ -3,11 +3,52 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:FitBro/common/color_extension.dart';
 import 'package:FitBro/models/data/data.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-class MealDetailView extends StatelessWidget {
+class MealDetailView extends StatefulWidget {
   final Meal meal;
 
   const MealDetailView({super.key, required this.meal});
+
+  @override
+  _MealDetailsScreenState createState() => _MealDetailsScreenState();
+}
+
+class _MealDetailsScreenState extends State<MealDetailView> {
+  late Meal meal;
+  BannerAd? _bannerAd;
+  bool _isBannerAdLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    meal = widget.meal;
+    _bannerAd = BannerAd(
+      adUnitId: 'ca-app-pub-8639311525630636/6699798389',
+      size: AdSize.banner,
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          setState(() {
+            _isBannerAdLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          setState(() {
+            _isBannerAdLoaded = false;
+          });
+        },
+      ),
+    );
+    _bannerAd?.load();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -176,6 +217,14 @@ class MealDetailView extends StatelessWidget {
               ],
             ),
           ),
+          bottomNavigationBar: _isBannerAdLoaded && _bannerAd != null
+              ? Container(
+                  width: _bannerAd!.size.width.toDouble(),
+                  height: _bannerAd!.size.height.toDouble(),
+                  alignment: Alignment.center,
+                  child: AdWidget(ad: _bannerAd!),
+                )
+              : null,
         );
       },
     );
